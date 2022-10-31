@@ -1,0 +1,18 @@
+.container{
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: center;
+}
+.container h1{
+    font-family: Bungee;
+    color: ghostwhite;
+    font-size: 70px;
+    margin: 0;
+}
+.container h5{
+    font-size: larger;
+    margin: 0;
+    color: ghostwhite;
+}

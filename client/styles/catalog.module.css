@@ -1,0 +1,7 @@
+.container{
+ display: grid;
+}
+.sidebar{
+    width: 350px;
+    height: 100vh;
+}

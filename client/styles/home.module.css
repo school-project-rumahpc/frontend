@@ -1,0 +1,113 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+.form-container {
+  width: 70%;
+}
+.form input::placeholder {
+  color: rgb(0, 152, 103, 0.5);
+}
+.form input:focus::placeholder,
+.form input:hover::placeholder {
+  color: rgb(248, 248, 255, 0.8);
+}
+.form label{
+  margin: 10px 0 0;
+}
+.form input {
+  border: #009867 solid 1px;
+  background-color: ghostwhite;
+  color: #009867;
+  border-radius: 15px;
+  width: 100%;
+  height: 45px;
+  font-size: 15px;
+  background-position: 10px;
+  background-size: 23px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
+.form input:focus {
+  box-shadow: #009867 0 0 6px;
+}
+.form input:focus,
+.form input:hover {
+  background-color: #009867;
+  color: ghostwhite;
+  padding-left: 15px;
+}
+.form button {
+  border: #009867 solid 2px;
+  border-radius: 25px;
+  height: 30px;
+  width: 100px;
+  margin: 10px 0 0;
+  background-color: #009867;
+  color: ghostwhite;
+}
+.form button:hover {
+  background-color: ghostwhite;
+  color: #009867;
+  cursor: pointer;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.header-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+.header-container h2:hover {
+  cursor: pointer;
+}
+.bg {
+  min-height: 100vh;
+  background-color: #009867;
+}
+.focus{
+    transition: opacity 0.3s ease-out;
+    opacity: 1;
+}
+.not{
+    transition: opacity 0.3s ease-out;
+    opacity: 0.3;
+}
+.error{
+  margin: 5px 0 0 0;
+  color: red;
+  font-size: xx-small;
+}
+.show{
+  display: grid;
+  margin:  5px 0 0;
+  align-items: center;
+  justify-content: start;
+  grid-template-columns: auto auto;
+  font-size: smaller;
+}
+.show input{
+  accent-color: #009867;
+  height: 100%;
+}
+#email{
+  background-image: url(../public/mail.svg);
+ } 
+#password{
+  background-image: url(../public/pass.svg);
+}
+#user{
+  background-image: url(../public/user.svg);
+}
+#phone{
+  background-image: url(../public/phone.svg);
+}
