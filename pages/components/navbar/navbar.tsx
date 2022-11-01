@@ -5,13 +5,27 @@ import Styles from '../../../styles/header.module.css';
 
 const Navbar: NextPage = () => {
   return (
-    <nav className={Styles.container} style={{boxShadow:' 0px 2px 5px rgba(0, 0, 0, 0.25)'}}>
+    <nav
+      className={Styles.container}
+      style={{ boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)' }}
+    >
       <div className={Styles.logo}>
-        <Image src={'/logo.svg'} width={121} height={84} alt='Logo' priority />
+        <Link href={'/catalog'}>
+          <a>
+            <Image
+              src={'/logo.svg'}
+              width={121}
+              height={84}
+              alt='Logo'
+              priority
+            />
+          </a>
+        </Link>
       </div>
-      <section className={Styles.search}>
+      <form className={Styles.search}>
         <input type='search' />
-      </section>
+        <button type='submit'></button>
+      </form>
       <div className={Styles.store}>
         <Link href={''}>
           <a>
