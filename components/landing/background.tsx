@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import Styles from '../../../styles/background.module.css'
+import Styles from '../../styles/background.module.css'
 
 const Background: NextPage = () => {
   return (

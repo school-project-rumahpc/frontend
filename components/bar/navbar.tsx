@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Styles from '../../../styles/header.module.css';
+import Styles from '../../styles/header.module.css';
 
 const Navbar: NextPage = () => {
   return (

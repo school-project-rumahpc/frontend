@@ -1,14 +1,20 @@
 import { NextPage } from 'next';
-import Styles from '../../../styles/catalog.module.css';
+import Styles from '../../styles/catalog.module.css';
+
+
+
+const CatList = () => {
+
+}
+
 
 const Sidebar: NextPage = () => {
   return (
     <div className={Styles.sidebar}>
-      <header>
-        <p className={Styles.title}>Category</p>
+      <header className={Styles.title}>
+        <p>Category</p>
       </header>
       <main>
-        <div className={Styles['list-wrapper']}></div>
       </main>
     </div>
   );

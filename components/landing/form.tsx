@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import Styles from '../../../styles/home.module.css';
-import LogApi from '../../api/auth/login';
-import RegApi from '../../api/auth/register';
+import Styles from '../../styles/home.module.css';
+import LogApi from '../../pages/api/auth/login';
+import RegApi from '../../pages/api/auth/register';
 
 interface data {
   username: string;
@@ -92,7 +92,7 @@ const Register = () => {
         <p>Show Password</p>
         <input type='checkbox' onClick={() => setShow(!show)} />
       </span>
-      {/* CHANGE TO USERNAME  */}
+      {/* FIXME: CHANGE TO USERNAME  */}
       {msg?.id?<p>User Registered</p>:<p className={Styles.error}>{msg?.message}</p>}
       <button type='submit'>Register</button>
     </form>
