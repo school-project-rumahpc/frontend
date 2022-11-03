@@ -60,6 +60,7 @@
   isolation: isolate;
 }
 .user a{
+  z-index: 1;
   width: 40px;
   height: 40px;
 }

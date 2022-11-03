@@ -1,7 +1,6 @@
-import { NextPage } from 'next';
 import Styles from '../../styles/background.module.css'
 
-const Background: NextPage = () => {
+const Background = () => {
   return (
     <div className={Styles.container}>
         <span>

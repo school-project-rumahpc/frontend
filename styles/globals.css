@@ -3,15 +3,14 @@ body {
   padding: 0;
   margin: 0;
 }
-
 a {
+  cursor: pointer;
   color: inherit;
   text-decoration: none;
 }
 a:hover {
   font-weight: bolder;
 }
-
 input,
 input:focus,
 button {
@@ -34,12 +33,12 @@ button {
   width: max-content;
   font-size: 7em;
 }
+/* must set -webkit-text-stroke: '{stroke width} {desired color}' inline styles  */
 .animated :nth-child(1) {
   color: transparent;
-  -webkit-text-stroke: 2px #009867;
 }
+/* must set color:'{desired color} inline style' */
 .animated :nth-child(2) {
-  color: #009867;
   animation: animate 4s ease-in-out infinite;
 }
 /* water animation by Álvaro on CodePen*/

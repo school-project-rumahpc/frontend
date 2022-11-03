@@ -1,9 +1,8 @@
-import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import Styles from '../../styles/header.module.css';
 
-const Navbar: NextPage = () => {
+const Navbar = () => {
   return (
     <nav
       className={Styles.container}
@@ -11,7 +10,6 @@ const Navbar: NextPage = () => {
     >
       <div className={Styles.logo}>
         <Link href={'/catalog'}>
-          <a>
             <Image
               src={'/logo.svg'}
               width={121}
@@ -19,7 +17,6 @@ const Navbar: NextPage = () => {
               alt='Logo'
               priority
             />
-          </a>
         </Link>
       </div>
       <form className={Styles.search}>
@@ -28,7 +25,6 @@ const Navbar: NextPage = () => {
       </form>
       <div className={Styles.store}>
         <Link href={''}>
-          <a>
             <Image
               src={'/store.svg'}
               width={35}
@@ -36,12 +32,10 @@ const Navbar: NextPage = () => {
               alt='Store'
               priority
             />
-          </a>
         </Link>
       </div>
       <div className={Styles.cart}>
         <Link href={''}>
-          <a>
             <Image
               src={'/cart.svg'}
               width={35}
@@ -49,7 +43,6 @@ const Navbar: NextPage = () => {
               alt='Cart'
               priority
             />
-          </a>
         </Link>
       </div>
       <div className={Styles.user}>
@@ -57,7 +50,6 @@ const Navbar: NextPage = () => {
         <div id={Styles[2]}></div>
         <div id={Styles[3]}></div>
         <Link href={''}>
-          <a>
             <Image
               src={'/account.svg'}
               width={40}
@@ -65,7 +57,6 @@ const Navbar: NextPage = () => {
               alt='Cart'
               priority
             />
-          </a>
         </Link>
       </div>
     </nav>

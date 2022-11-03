@@ -1,7 +1,6 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
 
-const Custom404: NextPage = () => {
+const Custom404 = () => {
   return (
     <div
       style={{
@@ -13,10 +12,10 @@ const Custom404: NextPage = () => {
         backgroundColor: 'rgb(0, 152, 103, 0.1)',
       }}
     >
-      <div style={{ textAlign: 'center' }} className='animated'>
-        <h2>404 | Page Not Found</h2>
-        <h2>404 | Page Not Found</h2>
-      </div>
+      <span style={{ textAlign: 'center' }} className='animated'>
+        <h2 style={{WebkitTextStroke:'2px #009867'}}>404 | Page Not Found</h2>
+        <h2 style={{color:'#009867'}}>404 | Page Not Found</h2>
+      </span>
       <div style={{}}>
       <Link href={'/catalog'}>
         <a style={{ cursor: 'pointer' }}>Back?</a>

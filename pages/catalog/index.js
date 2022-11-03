@@ -1,36 +1,28 @@
-import { NextPage } from 'next';
 import Navbar from '../../components/bar/navbar';
 import Styles from '../../styles/catalog.module.css';
 import Sidebar from '../../components/bar/sidebar';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/loading';
-import dataFetch from '../api/fetch';
+// import dataFetch from '../api/fetch';
 
-interface data {
-  category_name: string;
-  id: number;
-}
 
-const Catalog: NextPage = () => {
-  const [data, setData] = useState<data[] | null>(null);
+const Catalog = () => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    dataFetch()
-      .then((d) => {
-        setData(d);
+    // dataFetch()
+    //   .then((d) => {
+    //     setData(d);
         setLoading(false);
-      });
+      // });
   }, []);
-  // TODO:  delete log if done
-  console.log(data);
 
   return (
     <div className={Styles.container}>
-      <Sidebar />
+      <Sidebar dataList={data}/>
       <Navbar />
-      {/* <Loading/> */}
       {loading ? (
         <Loading/>
       ) : !data ? (
