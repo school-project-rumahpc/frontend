@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import Image from 'next/image';
 import Styles from '../../styles/header.module.css';
 import Link from 'next/link';

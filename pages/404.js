@@ -18,7 +18,7 @@ const Custom404 = () => {
       </span>
       <div style={{}}>
       <Link href={'/catalog'}>
-        <a style={{ cursor: 'pointer' }}>Back?</a>
+        <p style={{ cursor: 'pointer' }}>Back?</p>
       </Link>        
       </div>
     </div>

@@ -3,8 +3,8 @@ import Styles from '../../styles/catalog.module.css';
 import Sidebar from '../../components/bar/sidebar';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/loading';
+import { Button } from 'antd';
 // import dataFetch from '../api/fetch';
-
 
 const Catalog = () => {
   const [data, setData] = useState(null);
@@ -15,22 +15,27 @@ const Catalog = () => {
     // dataFetch()
     //   .then((d) => {
     //     setData(d);
-        setLoading(false);
-      // });
+    setLoading(false);
+    // });
   }, []);
 
   return (
     <div className={Styles.container}>
-      <Sidebar dataList={data}/>
+      <Sidebar dataList={data} />
       <Navbar />
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : !data ? (
-        <p>no data</p>
+        <div>
+          <p>no data</p>
+        </div>
       ) : (
         <div className={Styles.main}>
           {data.map(({ category_name, id }) => (
-            <p key={id}>{id}. title :<br />{category_name}</p>
+            <p key={id}>
+              {id}. title :<br />
+              {category_name}
+            </p>
           ))}
         </div>
       )}

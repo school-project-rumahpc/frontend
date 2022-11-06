@@ -1,24 +1,13 @@
 html,
 body {
+  color: #009867;
   padding: 0;
   margin: 0;
 }
 a {
   cursor: pointer;
-  color: inherit;
-  text-decoration: none;
-}
-a:hover {
-  font-weight: bolder;
-}
-input,
-input:focus,
-button {
-  border: none;
-  outline: none;
 }
 * {
-  color: #009867;
   box-sizing: border-box;
   font-family: Nova Flat, sans-serif;
 }
