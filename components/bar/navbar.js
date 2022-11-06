@@ -10,6 +10,7 @@ const Navbar = () => {
     >
       <div className={Styles.logo}>
         <Link href={'/catalog'}>
+          <a>
             <Image
               src={'/logo.svg'}
               width={121}
@@ -17,6 +18,7 @@ const Navbar = () => {
               alt='Logo'
               priority
             />
+          </a>
         </Link>
       </div>
       <form className={Styles.search}>
@@ -25,6 +27,7 @@ const Navbar = () => {
       </form>
       <div className={Styles.store}>
         <Link href={''}>
+          <a>
             <Image
               src={'/store.svg'}
               width={35}
@@ -32,10 +35,12 @@ const Navbar = () => {
               alt='Store'
               priority
             />
+          </a>
         </Link>
       </div>
       <div className={Styles.cart}>
         <Link href={''}>
+          <a>
             <Image
               src={'/cart.svg'}
               width={35}
@@ -43,6 +48,7 @@ const Navbar = () => {
               alt='Cart'
               priority
             />
+          </a>
         </Link>
       </div>
       <div className={Styles.user}>
@@ -50,6 +56,7 @@ const Navbar = () => {
         <div id={Styles[2]}></div>
         <div id={Styles[3]}></div>
         <Link href={''}>
+          <a>
             <Image
               src={'/account.svg'}
               width={40}
@@ -57,6 +64,7 @@ const Navbar = () => {
               alt='Cart'
               priority
             />
+          </a>
         </Link>
       </div>
     </nav>

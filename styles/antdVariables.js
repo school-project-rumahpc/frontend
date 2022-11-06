@@ -5,8 +5,7 @@ module.exports = {
     '@border-width-base': '2px',
     '@text-color': '#009867',
     '@heading-color': '@text-color',
-    '@margin-lg': '15px',
     '@form-vertical-label-padding': '0',
-    '@font-size-base': '11px',
-    '@input-height-lg': '20px'
+    '@input-height-base': '40px',
+    '@form-item-margin-bottom': '10px'
 };

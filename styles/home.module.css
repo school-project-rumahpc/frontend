@@ -45,15 +45,3 @@
     transition: opacity 0.3s ease-out;
     opacity: 0.3;
 }
-#email{
-  background-image: url(../public/mail.svg);
- } 
-#password{
-  background-image: url(../public/pass.svg);
-}
-#user{
-  background-image: url(../public/user.svg);
-}
-#phone{
-  background-image: url(../public/phone.svg);
-}
