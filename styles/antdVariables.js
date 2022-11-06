@@ -7,5 +7,5 @@ module.exports = {
     '@heading-color': '@text-color',
     '@form-vertical-label-padding': '0',
     '@input-height-base': '40px',
-    '@form-item-margin-bottom': '10px'
+    '@form-item-margin-bottom': '7px'
 };
