@@ -11,11 +11,7 @@ const Sidebar = ({ dataList }) => {
             <li>
               <a>all</a>
             </li>
-            {dataList?.map(({category_name,id})=>(
-              <li key={id}>
-                <a>{category_name}</a>
-              </li>
-            ))}
+            {/* some Category */}
           </ul>
         </span>
       <main></main>

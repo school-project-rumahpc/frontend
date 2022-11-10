@@ -4,6 +4,13 @@ body {
   padding: 0;
   margin: 0;
 }
+h1,h2,h3,h4,h5{
+   margin-bottom: 0 !important;
+}
+a:hover,
+a:focus{
+  font-weight: bolder;
+}
 a {
   cursor: pointer;
 }
@@ -60,3 +67,13 @@ a {
     );
   }
 }
+/* antD styling */
+.ant-layout-header{
+  padding: 0 !important;
+}
+.ant-layout-header{
+  line-height: 0 !important;
+}
+/* .ant-btn-icon-only{
+  min-height: 40px !important;
+} */
