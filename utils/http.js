@@ -14,13 +14,10 @@ let AuthIntercept = superagentIntercept((err, res) => {
 export const http = {
   auth: (url, values) => {
     const req = superagent
-      .post(url)
-      .send(values)
-      // .use(attachSuperagentLogger)
-      if (req.body) {
-        console.log(req.body)
-      }
-      return  req
+    .post(url)
+    .send(values)
+    .use(attachSuperagentLogger)
+    return req;
   },
   fetcher: async (url) => {
     let req = superagent
