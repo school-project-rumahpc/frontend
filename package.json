@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "antd": "^4.24.0",
+    "atob": "^2.1.2",
     "babel-plugin-import": "^1.13.5",
     "next": "12.3.2",
     "next-plugin-antd-less": "^1.8.0",

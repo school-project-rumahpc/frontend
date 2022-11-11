@@ -596,6 +596,11 @@
   "resolved" "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz"
   "version" "0.4.0"
 
+"atob@^2.1.2":
+  "integrity" "sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg=="
+  "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
+  "version" "2.1.2"
+
 "axe-core@^4.4.3":
   "integrity" "sha512-1exVbW0X1O/HSr/WMwnaweyqcWOgZgLiVxdLG34pvSQk4NlYQr9OUy0JLwuhFfuVNQzzqgH57eYzkFBCb3bIsQ=="
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.5.1.tgz"
