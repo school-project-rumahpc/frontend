@@ -15,10 +15,13 @@ const Catalog = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-        style={{ borderRight: '3px solid #1ba675' }}
+        style={{
+          borderRight: '3px solid #1ba675',
+        }}
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        width={300}
       ></Sider>
       <Layout>
         <Header
@@ -45,19 +48,31 @@ const Catalog = () => {
                 </a>
               </Link>
             </Col>
-            <Col style={{margin:'auto'}}>
+            <Col style={{ margin: 'auto' }}>
               <Input.Search
-              style={{width:'350px'}}
+                style={{ width: '350px' }}
                 onSearch={onSearch}
-                allowClear 
+                allowClear
                 /*enterButton='Search'*/
               />
             </Col>
             <Col>
-              <a>Store</a>
+              <div className={Styles.icon}>
+                <Link href={'/catalog'}>
+                  <a>
+                  <Image  src={'/store.svg'} width={35} height={35} />
+                  </a>
+                </Link>
+              </div>
             </Col>
             <Col>
-              <a>Cart</a>
+            <div className={Styles.icon}>
+              <Link href={'/catalog'}>
+                <a>
+                <Image  src={'/cart.svg'} width={35} height={35} />
+                </a>
+              </Link>
+            </div>
             </Col>
 
             <Col>

@@ -4,11 +4,15 @@ body {
   padding: 0;
   margin: 0;
 }
-h1,h2,h3,h4,h5{
-   margin-bottom: 0 !important;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-bottom: 0 !important;
 }
 a:hover,
-a:focus{
+a:focus {
   font-weight: bolder;
 }
 a {
@@ -18,12 +22,12 @@ a {
   box-sizing: border-box;
   font-family: Nova Flat, sans-serif;
 }
-.animated{
+.animated {
   display: grid;
   -webkit-user-select: none;
   user-select: none;
 }
-.animated > *{
+.animated > * {
   grid-column: 1/-1;
   grid-row: 1/-1;
   width: max-content;
@@ -68,12 +72,25 @@ a {
   }
 }
 /* antD styling */
-.ant-layout-header{
+.ant-layout-header {
   padding: 0 !important;
 }
-.ant-layout-header{
+.ant-layout-header {
   line-height: 0 !important;
+}
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button {
+  border-left: none !important;
+}
+.ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+  border-right: none !important;
+}
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
 }
 /* .ant-btn-icon-only{
   min-height: 40px !important;
-} */
+} */ ;

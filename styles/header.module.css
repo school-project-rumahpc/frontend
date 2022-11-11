@@ -1,88 +1,65 @@
 .container {
-  height: 100px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  overflow-x: hidden;
+height: 100px;
+width: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+overflow-x: hidden;
 }
 .list-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 40px;
-  font-size: larger;
-  justify-items: end;
-  margin-right: 30px;
+display: grid;
+grid-template-columns: auto auto auto;
+gap: 40px;
+font-size: larger;
+justify-items: end;
+margin-right: 30px;
 }
 .logo {
   margin-left: 20px;
   width: 121px;
   height: 84px;
 }
-.search{
-  margin: auto;
-  display: grid;
-  justify-items: end;
+.icon img:hover {
+  transform: translateY(-2px);
 }
-.search button[type='submit']:hover
-,.store img:hover
-,.cart img:hover{
-  transform: translatey(-2px);
-}
-.search button[type='submit']{
-  cursor: pointer;
-  background: none;
-  background-image: url(../public/search.svg);
-  background-repeat: no-repeat;
-  background-position: 10px;
-  background-size: 23px;
-  margin-right: 10px;
-  height: 40px;
-  width: 40px;
-}
-.search input {
-  border-radius: 30px;
-  font-size: medium;
-  padding: 0 40px 0 20px;
-  border: solid 2px #009867;
-  height: 40px;
-  width: 400px;
-}
-.search input::-webkit-search-cancel-button {
-  display: none;
-}
-.user{
+.user {
   display: grid;
   place-items: center;
   width: 85px;
   height: 100px;
   isolation: isolate;
 }
-.user a{
+.user a {
   z-index: 1;
   width: 40px;
   height: 40px;
 }
 .user > *,
-.search > *{
+.search > * {
   grid-column: 1/-1;
   grid-row: 1/-1;
 }
-#1,#2,#3{
+#1,
+#2,
+#3 {
   width: 85px;
   height: 100px;
   background-color: #009867;
   border-radius: 500px 0 0 500px;
 }
-#2{
+#2 {
   margin-left: -15px;
   opacity: 0.5;
 }
-#3{
+#3 {
   margin-left: -30px;
   opacity: 0.2;
 }
-.store,.cart{
-  margin-right: 30px;
+.icon:focus-visible,
+.logo:focus-visible {
+  transform: translateY(-10px);
+}
+.icon {
+  margin-right: 35px;
 }
