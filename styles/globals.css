@@ -1,25 +1,96 @@
 html,
 body {
+  color: #009867;
   padding: 0;
   margin: 0;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-bottom: 0 !important;
 }
-a:hover {
+a:hover,
+a:focus {
   font-weight: bolder;
 }
-
-input,
-input:focus,
-button {
-  border: none;
-  outline: none;
+a {
+  cursor: pointer;
 }
 * {
-  color: #009867;
   box-sizing: border-box;
   font-family: Nova Flat, sans-serif;
 }
+.animated {
+  display: grid;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.animated > * {
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  width: max-content;
+  font-size: 7em;
+}
+/* must set -webkit-text-stroke: '{stroke width} {desired color}' inline styles  */
+.animated :nth-child(1) {
+  color: transparent;
+}
+/* must set color:'{desired color} inline style' */
+.animated :nth-child(2) {
+  animation: animate 4s ease-in-out infinite;
+}
+/* water animation by Álvaro on CodePen*/
+@keyframes animate {
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 45%,
+      16% 44%,
+      33% 50%,
+      54% 60%,
+      70% 61%,
+      84% 59%,
+      100% 52%,
+      100% 100%,
+      0% 100%
+    );
+  }
+  50% {
+    clip-path: polygon(
+      0% 60%,
+      15% 65%,
+      34% 66%,
+      51% 62%,
+      67% 50%,
+      84% 45%,
+      100% 46%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}
+/* antD styling */
+.ant-layout-header {
+  padding: 0 !important;
+}
+.ant-layout-header {
+  line-height: 0 !important;
+}
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button {
+  border-left: none !important;
+}
+.ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+  border-right: none !important;
+}
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
+}
+/* .ant-btn-icon-only{
+  min-height: 40px !important;
+} */ ;

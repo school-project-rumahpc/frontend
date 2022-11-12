@@ -1,9 +1,8 @@
-import { NextPage } from 'next';
 import Image from 'next/image';
-import Styles from '../../../styles/header.module.css'
+import Styles from '../../styles/header.module.css';
 import Link from 'next/link';
 
-const Header: NextPage = () => {
+const Header = () => {
   return (
     <div className={Styles.container}>
       <div className={Styles.logo}>
@@ -11,18 +10,18 @@ const Header: NextPage = () => {
       </div>
       <ul className={Styles['list-container']}>
         <li>
-          <Link href="">
-            <a>Catalog</a>
+          <Link href='/catalog'>
+          Catalog
           </Link>
         </li>
         <li>
-          <Link href="">
-            <a>Our Shop</a>
+          <Link href=''>
+          Our Shop
           </Link>
         </li>
         <li>
-          <Link href="">
-            <a>How to order</a>
+          <Link href=''>
+          How to order
           </Link>
         </li>
       </ul>

@@ -2,7 +2,7 @@
     height: 100vh;
     display: grid;
     grid-template-rows: auto;
-    align-items: center;
+    padding-top: 250px;
     justify-items: center;
 }
 .container h1{

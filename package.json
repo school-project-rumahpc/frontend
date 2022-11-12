@@ -1,25 +1,26 @@
 {
-  "name": "rumahpcts",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "next build ",
+    "start": "next start ",
+    "lint": "next lint "
   },
   "dependencies": {
-    "next": "12.3.1",
+    "antd": "^4.24.0",
+    "atob": "^2.1.2",
+    "babel-plugin-import": "^1.13.5",
+    "next": "12.3.2",
+    "next-plugin-antd-less": "^1.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.38.0"
+    "superagent": "^8.0.3",
+    "superagent-intercept": "^0.1.2"
   },
   "devDependencies": {
-    "@types/node": "18.11.5",
-    "@types/react": "18.0.22",
-    "@types/react-dom": "18.0.7",
     "eslint": "8.26.0",
-    "eslint-config-next": "12.3.1",
-    "typescript": "4.8.4"
+    "eslint-config-next": "12.3.2"
   }
 }
