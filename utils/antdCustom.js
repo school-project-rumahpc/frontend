@@ -7,5 +7,4 @@ export const antdCustom = {
       mismatch: 'Invalid ${label}',
     },
   },
-  
 };

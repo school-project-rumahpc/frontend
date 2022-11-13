@@ -13,7 +13,7 @@ h5 {
 }
 a:hover,
 a:focus {
-  font-weight: bolder;
+  text-decoration: underline !important;
 }
 a {
   cursor: pointer;
@@ -91,6 +91,6 @@ a {
 .ant-input-affix-wrapper-focused {
   box-shadow: none !important;
 }
-/* .ant-btn-icon-only{
-  min-height: 40px !important;
-} */ ;
+.ant-input-affix-wrapper > .ant-input{
+  border-radius: 0 !important;
+}

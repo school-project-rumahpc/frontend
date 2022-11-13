@@ -1,4 +1,4 @@
-import { Alert, AutoComplete, Button, Form, Input, message } from 'antd';
+import { Alert, AutoComplete, Button, Form, Input, message, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { appConfig } from '../../config/appConfig';
@@ -20,6 +20,7 @@ const Login = () => {
     const res = http.auth(appConfig.logInUrl, values);
     res.end((err, res) => {
       if (err && err.response.body.message) {
+        // error handling
         console.log(err.response);
         setMsg(err.response.body.message);
         return;
@@ -28,6 +29,7 @@ const Login = () => {
       TokenUtil.setAccessToken(res.body.access_token);
       TokenUtil.persistToken();
       const jwt = TokenUtil.decodedToken();
+      console.log(jwt);
       message.success(`Login Succes, welcome ${jwt.username}`);
       setTimeout(() => {
         router.push('/catalog');
@@ -51,7 +53,7 @@ const Login = () => {
         <Input type='text' placeholder='yourMail@email.com' />
       </Form.Item>
       <Form.Item name='password' label='Password' rules={[{ required: true }]}>
-        <Input.Password autoComplete='off' placeholder='Password' />
+        <Input.Password autoComplete='currentPassword' placeholder='Password' />
       </Form.Item>
       <Form.Item style={{ marginTop: '20px' }}>
         <Button size='middle' type='primary' htmlType='submit' shape='round'>
@@ -81,7 +83,7 @@ const Register = () => {
         setMsg(err.response.body.message);
         return;
       }
-      // TODO: show message to user via msg
+      message.success(`Register Success, now please login`);
       console.log(res);
     });
   };
@@ -116,7 +118,7 @@ const Register = () => {
         rules={[{ required: true }, { type: 'email' }]}
       >
         <AutoComplete options={options} onChange={handleDropdown}>
-          <Input placeholder='yourMail@email.com' />
+          <Input placeholder='Email or username' />
         </AutoComplete>
       </Form.Item>
       <Form.Item
@@ -124,7 +126,7 @@ const Register = () => {
         label='Password'
         rules={[{ required: true }, { min: 8 }]}
       >
-        <Input.Password placeholder='Password' />
+        <Input.Password autoComplete='currentPassword' placeholder='Password' />
       </Form.Item>
       <Form.Item
         name='phone'
@@ -159,28 +161,18 @@ const Register = () => {
 };
 
 const FormPage = () => {
-  const [onLogin, setLogin] = useState(true);
   return (
     <div className={Styles['form-container']}>
-      <section className={Styles['header-container']}>
-        <a onClick={() => setLogin(true)}>
-          <h2
-            tabIndex={0}
-            className={onLogin ? Styles['focus'] : Styles['not']}
-          >
-            Login
-          </h2>
-        </a>
-        <a onClick={() => setLogin(false)}>
-          <h2
-            tabIndex={0}
-            className={onLogin ? Styles['not'] : Styles['focus']}
-          >
-            Register
-          </h2>
-        </a>
-      </section>
-      {onLogin ? <Login /> : <Register />}
+      <Tabs
+        centered
+        size='large'
+        defaultActiveKey='1'
+        items={[
+          { label: 'Login', key: '1', children: <Login /> },
+          { label: 'Register', key: '2', children: <Register /> },
+        ]}
+      />
+      {/* {onLogin == 1 ? <Login /> : <Register />} */}
     </div>
   );
 };

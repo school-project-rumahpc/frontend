@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Styles from '../../styles/header.module.css';
 import Link from 'next/link';
+import Styles from '../../styles/header.module.css';
 
 const Header = () => {
   return (
@@ -15,7 +15,7 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <Link href=''>
+          <Link href='/our-retail'>
           Our Shop
           </Link>
         </li>

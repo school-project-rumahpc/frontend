@@ -1,10 +1,17 @@
-// import Form from '../components/landing/form';
+import { useRouter } from 'next/router';
 import Background from '../components/landing/background';
 import FormPage from '../components/landing/form';
 import Navbar from '../components/landing/header';
 import Styles from '../styles/home.module.css';
+import { TokenUtil } from '../utils/token';
 
 const Home = () => {
+const router = useRouter()
+    TokenUtil.loadToken()
+    if (TokenUtil.accessToken) {
+      router.push('/catalog')
+    }
+  
   return (
     <div className={Styles.container}>
       <main className={Styles.main}>
