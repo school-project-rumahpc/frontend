@@ -33,6 +33,9 @@ export class TokenUtil {
     }
 
     static decodedToken() {
+        if (!this.accessToken) {
+            return null;
+        }
         return JSON.parse(atob(TokenUtil.accessToken.split('.')[1]));
     }
 }

@@ -94,3 +94,9 @@ a {
 .ant-input-affix-wrapper > .ant-input{
   border-radius: 0 !important;
 }
+.ant-tabs-top > .ant-tabs-nav::before{
+  border-bottom: none !important;
+}
+.ant-drawer-title{
+  font-size: larger !important;
+}

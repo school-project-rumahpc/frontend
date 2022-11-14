@@ -1,6 +1,6 @@
 import Styles from '../../styles/catalog.module.css';
 
-const Sidebar = ({ dataList }) => {
+const Sidebar = () => {
   return (
     <div className={Styles.sidebar}>
       <header className={Styles.title}>

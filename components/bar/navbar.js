@@ -1,8 +1,9 @@
-import { Col, Drawer, Input, Row } from 'antd';
+import { Col, Input, Row } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Styles from '../../styles/header.module.css';
+import UserDrawer from '../user';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -79,9 +80,7 @@ const Navbar = () => {
           </div>
         </Col>
       </Row>
-      <Drawer placement='right' onClose={drawerClose} open={open}>
-        <p>My some content</p>
-      </Drawer>
+      <UserDrawer drawerClose={drawerClose} open={open}/>
     </>
   );
 };

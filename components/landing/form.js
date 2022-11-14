@@ -15,14 +15,16 @@ const onFinishFailed = (errorInfo) => {
 const Login = () => {
   const router = useRouter();
   const [msg, setMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
   const onLogin = (values) => {
-    // console.log(values);
+    setLoading(true);
     const res = http.auth(appConfig.logInUrl, values);
     res.end((err, res) => {
       if (err && err.response.body.message) {
         // error handling
         console.log(err.response);
         setMsg(err.response.body.message);
+        setLoading(false);
         return;
       }
       //set jwt to local storage
@@ -31,9 +33,8 @@ const Login = () => {
       const jwt = TokenUtil.decodedToken();
       console.log(jwt);
       message.success(`Login Succes, welcome ${jwt.username}`);
-      setTimeout(() => {
-        router.push('/catalog');
-      }, 2000);
+      setLoading(false);
+      router.push('/catalog');
     });
   };
 
@@ -56,8 +57,14 @@ const Login = () => {
         <Input.Password autoComplete='currentPassword' placeholder='Password' />
       </Form.Item>
       <Form.Item style={{ marginTop: '20px' }}>
-        <Button size='middle' type='primary' htmlType='submit' shape='round'>
-          Submit
+        <Button
+          loading={loading}
+          size='middle'
+          type='primary'
+          htmlType='submit'
+          shape='round'
+        >
+          Log In
         </Button>
       </Form.Item>
       {msg ? (
@@ -73,18 +80,21 @@ const Login = () => {
 };
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
 
   const onRegister = (values) => {
-    // console.log(values);
+    setLoading(true);
     const res = http.auth(appConfig.registerUrl, values);
     res.end((err, res) => {
       if (err && err.response.body.message) {
         setMsg(err.response.body.message);
+        setLoading(false);
         return;
       }
       message.success(`Register Success, now please login`);
-      console.log(res);
+      // console.log(res);
+      setLoading(false);
     });
   };
 
@@ -144,7 +154,13 @@ const Register = () => {
         <Input placeholder='08xxx-xxxx-xxxx' />
       </Form.Item>
       <Form.Item style={{ marginTop: '20px' }}>
-        <Button size='middle' type='primary' htmlType='submit' shape='round'>
+        <Button
+          loading={loading}
+          size='middle'
+          type='primary'
+          htmlType='submit'
+          shape='round'
+        >
           Submit
         </Button>
       </Form.Item>
@@ -172,7 +188,6 @@ const FormPage = () => {
           { label: 'Register', key: '2', children: <Register /> },
         ]}
       />
-      {/* {onLogin == 1 ? <Login /> : <Register />} */}
     </div>
   );
 };
