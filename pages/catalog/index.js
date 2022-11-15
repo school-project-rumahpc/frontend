@@ -1,22 +1,37 @@
-import { Layout } from 'antd';
+import { LeftOutlined, MenuOutlined } from '@ant-design/icons';
+import { Button, Layout } from 'antd';
 import { useState } from 'react';
 import Navbar from '../../components/bar/navbar';
+import Sidebar from '../../components/bar/sidebar';
 const { Header, Content, Sider } = Layout;
 
 const Catalog = () => {
-  const [collapsed, setCollapsed] = useState();
-
+  const [collapsed, setCollapsed] = useState(false);
+  const [key, setKey] = useState(1)
+  const getKey =(key)=>{
+    setKey(key)
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
         style={{
           borderRight: '3px solid #1ba675',
+          backgroundColor:'#fff'
         }}
+        trigger={null}
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
         width={300}
-      ></Sider>
+      >
+        <Button
+        style={{height:'100px'}}
+          icon={collapsed?<MenuOutlined/>:<LeftOutlined/>}
+          type='link'
+          onClick={() => setCollapsed(!collapsed)}
+          block
+        />
+        <Sidebar currentKey={getKey}/>
+      </Sider>
       <Layout>
         <Header
           style={{
@@ -27,7 +42,7 @@ const Catalog = () => {
           <Navbar />
         </Header>
         <Content>
-          <h1>Lorem ipsum dolor sin amet</h1>
+          <h1>{key}</h1>
         </Content>
       </Layout>
     </Layout>

@@ -1,21 +1,45 @@
-import Styles from '../../styles/catalog.module.css';
+import {
+  DesktopOutlined,
+  EllipsisOutlined,
+  LaptopOutlined
+} from '@ant-design/icons';
+import { Menu } from 'antd';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
-    <div className={Styles.sidebar}>
-      <header className={Styles.title}>
-        <p>Category</p>
-      </header>
-      <span>
-          <ul>
-            <li>
-              <a>all</a>
-            </li>
-            {/* some Category */}
-          </ul>
-        </span>
-      <main></main>
-    </div>
+    <Menu
+      defaultSelectedKeys={'1'}
+      onChange={(e) => console.log(e)}
+      items={[
+        {
+          key: '1',
+          icon: <EllipsisOutlined />,
+          label: 'All Category',
+          title: null,
+          onClick: (e) => {
+            props.currentKey(e.key)
+          },
+        },
+        {
+          key: '2',
+          icon: <LaptopOutlined />,
+          label: 'Laptop',
+          title: null,
+          onClick: (e) => {
+            props.currentKey(e.key)
+          },
+        },
+        {
+          key: '3',
+          icon: <DesktopOutlined />,
+          label: 'Personal Computer',
+          title: null,
+          onClick: (e) => {
+            props.currentKey(e.key)
+          },
+        },
+      ]}
+    />
   );
 };
 
