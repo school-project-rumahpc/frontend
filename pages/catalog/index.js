@@ -43,10 +43,12 @@ const Catalog = () => {
         </Header>
         <Content>
           <h1>{key}</h1>
+          <h1>clicked : </h1>
+          <Button type='primary' >Click me to see</Button>
         </Content>
       </Layout>
     </Layout>
   );
-};
+}
 
 export default Catalog;
