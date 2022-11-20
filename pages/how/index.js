@@ -15,9 +15,32 @@ const HowToOrder = () => {
       setLoading(false);
     });
   }, []);
-  if (loading)
-    return <Spin style={{ display: 'flex', margin: 'auto' }} size='large' />;
-  return <></>;
+  if (loading) {
+    return (
+      <Spin
+        style={{
+          display: 'flex',
+          height:'100vh',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        size='large'
+      />
+    );
+  }
+  return (
+    <>
+      <h1>Data successfully fetched. total : {store.dataList.limit}</h1>
+      {store.dataList.products.map((i) => {
+        return (
+          <div style={{padding:'0 20px'}} key={i.id}>
+            <hr />
+            <h1>{i.title}</h1>
+          </div>
+        );
+      })}
+    </>
+  );
 };
 
 export default observer(HowToOrder);
