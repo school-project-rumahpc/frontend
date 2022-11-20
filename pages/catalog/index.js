@@ -49,7 +49,7 @@ const Catalog = () => {
           <Navbar />
         </Header>
         <Content>
-
+          <h1>{key}</h1>
         </Content>
       </Layout>
     </Layout>
