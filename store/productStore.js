@@ -1,17 +1,21 @@
 import { makeAutoObservable } from "mobx";
+import { appConfig } from "../config/appConfig";
+import {http} from '../utils/http'
 
-class createProductStore{
-    dataList='default value';
-    
+class createData {
+  allData = null
+  products = null
 
-    loadData(data){
-        this.dataList = data
-    }
-    constructor(){
-        makeAutoObservable(this)
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
+  
+  loadData(){
+    const  result = http.fetcher(appConfig.apiUrl)
+    console.log(result)
+  }
 }
 
-const ProductStore = new createProductStore()
+const DataStore = new createData();
 
-export default ProductStore
+export default DataStore;

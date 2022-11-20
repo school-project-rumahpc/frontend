@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 55px;
 }
 .form-container {
   width: 70%;

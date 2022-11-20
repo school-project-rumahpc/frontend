@@ -1,15 +1,15 @@
-import React from 'react';
-import ProductStore from '../store/productStore';
+import React from "react";
+import DataStore from "../store/productStore";
 
-const StoreContext = React.createContext();
+const storeContext = React.createContext();
 
 export const StoreProvider = ({ children }) => {
-  const productStore = ProductStore
+  const dataStore = DataStore;
   return (
-    <StoreContext.Provider value={productStore}>
-      {children}
-    </StoreContext.Provider>
+    <storeContext.Provider value={dataStore}>
+        {children}
+    </storeContext.Provider>
   );
 };
 
-export const useStore = () => React.useContext(StoreContext);
+export const useStore = ()=>React.useContext(storeContext)
