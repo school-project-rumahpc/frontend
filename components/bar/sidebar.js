@@ -19,11 +19,10 @@ const Sidebar = (props) => {
           onClick: (e) => {
             props.currentKey(e.key)
           },
-        },
-        {
+        },{
           key: '2',
-          icon: <LaptopOutlined />,
-          label: 'Laptop',
+          icon: <DesktopOutlined />,
+          label: 'Personal Computer',
           title: null,
           onClick: (e) => {
             props.currentKey(e.key)
@@ -31,8 +30,8 @@ const Sidebar = (props) => {
         },
         {
           key: '3',
-          icon: <DesktopOutlined />,
-          label: 'Personal Computer',
+          icon: <LaptopOutlined />,
+          label: 'Laptop',
           title: null,
           onClick: (e) => {
             props.currentKey(e.key)

@@ -1,9 +1,10 @@
+import {observer} from 'mobx-react-lite'
+import {Button} from 'antd'
+
 const HowToOrder = () => {
     return (
-        <h1>
-            How to order page.
-        </h1>
+        <></>
     );
 }
 
-export default HowToOrder;
+export default observer(HowToOrder);

@@ -3,14 +3,21 @@ import { Button, Layout } from 'antd';
 import { useState } from 'react';
 import Navbar from '../../components/bar/navbar';
 import Sidebar from '../../components/bar/sidebar';
+import {observer} from 'mobx-react-lite'
 const { Header, Content, Sider } = Layout;
 
 const Catalog = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [key, setKey] = useState(1)
   const getKey =(key)=>{
+    //props from menu
     setKey(key)
   }
+
+  useEffect(() => {
+  }, [])
+  
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -42,11 +49,11 @@ const Catalog = () => {
           <Navbar />
         </Header>
         <Content>
-          <h1>{key}</h1>
+
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default Catalog;
+export default observer(Catalog);
