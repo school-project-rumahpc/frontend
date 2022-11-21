@@ -1,11 +1,13 @@
 import {
   DesktopOutlined,
   EllipsisOutlined,
-  LaptopOutlined
+  LaptopOutlined,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
+import { useRouter } from 'next/router';
 
 const Sidebar = (props) => {
+  const router = useRouter();
   return (
     <Menu
       defaultSelectedKeys={'1'}
@@ -16,16 +18,17 @@ const Sidebar = (props) => {
           icon: <EllipsisOutlined />,
           label: 'All Category',
           title: null,
-          onClick: (e) => {
-            props.currentKey(e.key)
+          onClick: () => {
+            // router.push('/');
           },
-        },{
+        },
+        {
           key: '2',
           icon: <DesktopOutlined />,
           label: 'Personal Computer',
           title: null,
-          onClick: (e) => {
-            props.currentKey(e.key)
+          onClick: () => {
+            // router.push('/catalog/Computer');
           },
         },
         {
@@ -33,8 +36,8 @@ const Sidebar = (props) => {
           icon: <LaptopOutlined />,
           label: 'Laptop',
           title: null,
-          onClick: (e) => {
-            props.currentKey(e.key)
+          onClick: () => {
+            // router.push('/catalog/Laptop');
           },
         },
       ]}

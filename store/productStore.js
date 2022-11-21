@@ -1,18 +1,21 @@
-import { makeAutoObservable } from "mobx";
-import { appConfig } from "../config/appConfig";
-import {http} from '../utils/http'
+import { makeAutoObservable } from 'mobx';
 
 class createData {
-  allData = null
-  products = null
+  allData = null;
+  filteredData = this.allData
 
   constructor() {
     makeAutoObservable(this);
   }
-  
-  loadData(){
-    const  result = http.fetcher(appConfig.apiUrl)
-    console.log(result)
+
+  loadData(data) {
+      this.allData = data;
+  }
+  filteredData(filter){
+
+  }
+  revertFilter(){
+    
   }
 }
 
