@@ -5,6 +5,10 @@ module.exports = {
   '@primary-color': '#009867',
   '@text-color': '#009867',
   '@heading-color': '@text-color',
+  '@alert-message-color': 'red',
+  '@primary-color-hover': 'color(~colorPalette(@{primary-color}, 2) )',
+  '@primary-color-active': 'color(~colorPalette(@{primary-color}, 3) )',
+  '@menu-item-active-bg':'rgb(0 0 0 / 8%)',
   //border
   '@border-radius-base': '15px',
   '@border-color-base': '#009867',
@@ -18,4 +22,6 @@ module.exports = {
   '@layout-trigger-background': '#1ba675',
   '@layout-trigger-color': '#fff',
   '@layout-header-height': '64px',
+  //Sizes
+  '@tabs-title-font-size-lg': '1.3em',
 };

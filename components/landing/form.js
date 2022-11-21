@@ -1,8 +1,8 @@
-import { Alert, AutoComplete, Button, Form, Input, message } from 'antd';
+import { Alert, AutoComplete, Button, Form, Input, message, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { appConfig } from '../../config/appConfig';
-import Styles from '../../styles/home.module.css';
+import styles from '../../styles/home.module.css';
 import { antdCustom } from '../../utils/antdCustom';
 import { http } from '../../utils/http';
 import { TokenUtil } from '../../utils/token';
@@ -15,23 +15,26 @@ const onFinishFailed = (errorInfo) => {
 const Login = () => {
   const router = useRouter();
   const [msg, setMsg] = useState(null);
+  const [loading, setLoading] = useState(false);
   const onLogin = (values) => {
-    // console.log(values);
+    setLoading(true);
     const res = http.auth(appConfig.logInUrl, values);
     res.end((err, res) => {
       if (err && err.response.body.message) {
+        // error handling
         console.log(err.response);
         setMsg(err.response.body.message);
+        setLoading(false);
         return;
       }
       //set jwt to local storage
       TokenUtil.setAccessToken(res.body.access_token);
       TokenUtil.persistToken();
       const jwt = TokenUtil.decodedToken();
+      console.log(jwt);
       message.success(`Login Succes, welcome ${jwt.username}`);
-      setTimeout(() => {
-        router.push('/catalog');
-      }, 2000);
+      setLoading(false);
+      router.push('/catalog');
     });
   };
 
@@ -51,11 +54,17 @@ const Login = () => {
         <Input type='text' placeholder='yourMail@email.com' />
       </Form.Item>
       <Form.Item name='password' label='Password' rules={[{ required: true }]}>
-        <Input.Password autoComplete='off' placeholder='Password' />
+        <Input.Password autoComplete='currentPassword' placeholder='Password' />
       </Form.Item>
       <Form.Item style={{ marginTop: '20px' }}>
-        <Button size='middle' type='primary' htmlType='submit' shape='round'>
-          Submit
+        <Button
+          loading={loading}
+          size='middle'
+          type='primary'
+          htmlType='submit'
+          shape='round'
+        >
+          Log In
         </Button>
       </Form.Item>
       {msg ? (
@@ -71,18 +80,21 @@ const Login = () => {
 };
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
 
   const onRegister = (values) => {
-    // console.log(values);
+    setLoading(true);
     const res = http.auth(appConfig.registerUrl, values);
     res.end((err, res) => {
       if (err && err.response.body.message) {
         setMsg(err.response.body.message);
+        setLoading(false);
         return;
       }
-      // TODO: show message to user via msg
-      console.log(res);
+      message.success(`Register Success, now please login`);
+      // console.log(res);
+      setLoading(false);
     });
   };
 
@@ -116,7 +128,7 @@ const Register = () => {
         rules={[{ required: true }, { type: 'email' }]}
       >
         <AutoComplete options={options} onChange={handleDropdown}>
-          <Input placeholder='yourMail@email.com' />
+          <Input placeholder='Email or username' />
         </AutoComplete>
       </Form.Item>
       <Form.Item
@@ -124,7 +136,7 @@ const Register = () => {
         label='Password'
         rules={[{ required: true }, { min: 8 }]}
       >
-        <Input.Password placeholder='Password' />
+        <Input.Password autoComplete='currentPassword' placeholder='Password' />
       </Form.Item>
       <Form.Item
         name='phone'
@@ -142,7 +154,13 @@ const Register = () => {
         <Input placeholder='08xxx-xxxx-xxxx' />
       </Form.Item>
       <Form.Item style={{ marginTop: '20px' }}>
-        <Button size='middle' type='primary' htmlType='submit' shape='round'>
+        <Button
+          loading={loading}
+          size='middle'
+          type='primary'
+          htmlType='submit'
+          shape='round'
+        >
           Submit
         </Button>
       </Form.Item>
@@ -159,28 +177,17 @@ const Register = () => {
 };
 
 const FormPage = () => {
-  const [onLogin, setLogin] = useState(true);
   return (
-    <div className={Styles['form-container']}>
-      <section className={Styles['header-container']}>
-        <a onClick={() => setLogin(true)}>
-          <h2
-            tabIndex={0}
-            className={onLogin ? Styles['focus'] : Styles['not']}
-          >
-            Login
-          </h2>
-        </a>
-        <a onClick={() => setLogin(false)}>
-          <h2
-            tabIndex={0}
-            className={onLogin ? Styles['not'] : Styles['focus']}
-          >
-            Register
-          </h2>
-        </a>
-      </section>
-      {onLogin ? <Login /> : <Register />}
+    <div className={styles['form-container']}>
+      <Tabs
+        centered
+        size='large'
+        defaultActiveKey='1'
+        items={[
+          { label: 'Login', key: '1', children: <Login /> },
+          { label: 'Register', key: '2', children: <Register /> },
+        ]}
+      />
     </div>
   );
 };

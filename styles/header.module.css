@@ -19,6 +19,9 @@ margin-right: 30px;
   margin-left: 20px;
   width: 121px;
   height: 84px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none
 }
 .icon img:hover {
   transform: translateY(-2px);

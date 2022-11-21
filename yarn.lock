@@ -1720,18 +1720,18 @@
   "version" "4.3.0"
 
 "loader-utils@^2.0.0":
-  "integrity" "sha512-THWqIsn8QRnvLl0shHYVBN9syumU8pYWEHPTmkiVGd+7K5eFNVSY6AJhRvgGF70gg1Dz+l/k8WicvFCxdEs60A=="
-  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.3.tgz"
-  "version" "2.0.3"
+  "integrity" "sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw=="
+  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.4.tgz"
+  "version" "2.0.4"
   dependencies:
     "big.js" "^5.2.2"
     "emojis-list" "^3.0.0"
     "json5" "^2.1.2"
 
 "loader-utils@^3.2.0":
-  "integrity" "sha512-HVl9ZqccQihZ7JM85dco1MvO9G+ONvxoGa9rkhzFsneGLKSUg1gJf9bWzhRhcvm2qChhWpebQhP44qxjKIUCaQ=="
-  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-3.2.0.tgz"
-  "version" "3.2.0"
+  "integrity" "sha512-ZvFw1KWS3GVyYBYb7qkmRM/WwL2TQQBxgCK62rlvm4WpVQ23Nb4tYjApUlfjrEGvOs7KHEsmyUn75OHZrJMWPw=="
+  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-3.2.1.tgz"
+  "version" "3.2.1"
 
 "locate-path@^6.0.0":
   "integrity" "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="
@@ -1828,6 +1828,16 @@
   "integrity" "sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g=="
   "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz"
   "version" "1.2.7"
+
+"mobx-react-lite@^3.4.0":
+  "integrity" "sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ=="
+  "resolved" "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-3.4.0.tgz"
+  "version" "3.4.0"
+
+"mobx@^6.1.0", "mobx@^6.7.0":
+  "integrity" "sha512-1kBLBdSNG2bA522HQdbsTvwAwYf9hq9FWxmlhX7wTsJUAI54907J+ozfGW+LoYUo06vjit748g6QH1AAGLNebw=="
+  "resolved" "https://registry.npmjs.org/mobx/-/mobx-6.7.0.tgz"
+  "version" "6.7.0"
 
 "moment@^2.24.0", "moment@^2.29.2":
   "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
@@ -2505,7 +2515,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
-"react@*", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.0.0", "react@>=16.11.0", "react@>=16.9.0", "react@18.2.0":
+"react@*", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.0.0", "react@>=16.11.0", "react@>=16.9.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

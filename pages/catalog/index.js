@@ -1,106 +1,52 @@
-import { Col, Input, Layout, Row } from 'antd';
-import Image from 'next/image';
-import Link from 'next/link';
+import { LeftOutlined, MenuOutlined } from '@ant-design/icons';
+import { Button, Layout } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import Styles from '../../styles/header.module.css';
-const { Header, Content, Sider } = Layout;
+import Navbar from '../../components/bar/navbar';
+import Sidebar from '../../components/bar/sidebar';
+import Products from '../../components/product list/products';
+const { Footer,Header, Content, Sider } = Layout;
 
 const Catalog = () => {
-  const [collapsed, setCollapsed] = useState();
-
-  const onSearch = (value) => {
-    console.log(value);
-  };
-
+  const [collapsed, setCollapsed] = useState(false);
+  
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' , maxHeight: '100vh'}}>
       <Sider
         style={{
           borderRight: '3px solid #1ba675',
+          backgroundColor:'#fff'
         }}
+        trigger={null}
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
         width={300}
-      ></Sider>
-      <Layout>
+      >
+        <Button
+        style={{height:'100px'}}
+          icon={collapsed?<MenuOutlined/>:<LeftOutlined/>}
+          type='link'
+          onClick={() => setCollapsed(!collapsed)}
+          block
+        />
+        <Sidebar/>
+      </Sider>
+      <Layout style={{maxHeight:'100vh', overflowY:'scroll'}}>
         <Header
           style={{
             boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
             height: '100px',
           }}
         >
-          <Row
-            justify='space-between'
-            align='middle'
-            style={{ height: '100px' }}
-          >
-            <Col className={Styles.logo}>
-              <Link href={'/catalog'}>
-                <a>
-                  <Image
-                    src={'/logo.svg'}
-                    width={121}
-                    height={84}
-                    alt='Logo'
-                    priority
-                  />
-                </a>
-              </Link>
-            </Col>
-            <Col style={{ margin: 'auto' }}>
-              <Input.Search
-                style={{ width: '350px' }}
-                onSearch={onSearch}
-                allowClear
-                /*enterButton='Search'*/
-              />
-            </Col>
-            <Col>
-              <div className={Styles.icon}>
-                <Link href={'/catalog'}>
-                  <a>
-                  <Image  src={'/store.svg'} width={35} height={35} />
-                  </a>
-                </Link>
-              </div>
-            </Col>
-            <Col>
-            <div className={Styles.icon}>
-              <Link href={'/catalog'}>
-                <a>
-                <Image  src={'/cart.svg'} width={35} height={35} />
-                </a>
-              </Link>
-            </div>
-            </Col>
-
-            <Col>
-              <div className={Styles.user}>
-                <div id={Styles[1]}></div>
-                <div id={Styles[2]}></div>
-                <div id={Styles[3]}></div>
-                <Link href={''}>
-                  <a>
-                    <Image
-                      src={'/account.svg'}
-                      width={40}
-                      height={40}
-                      alt='Cart'
-                      priority
-                    />
-                  </a>
-                </Link>
-              </div>
-            </Col>
-          </Row>
+          <Navbar />
         </Header>
-        <Content>
-          <h1>Lorem ipsum dolor sin amet</h1>
+        <Content style={{minHeight:'max-content'}}>
+          <Products/>
         </Content>
+        <Footer>Copyright all rights reserved</Footer>
       </Layout>
     </Layout>
   );
 };
 
-export default Catalog;
+export default observer(Catalog);

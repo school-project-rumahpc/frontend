@@ -19,9 +19,9 @@ export const http = {
     .use(attachSuperagentLogger)
     return req;
   },
-  fetcher: async (url) => {
+  fetcher: async () => {
     let req = superagent
-      .get(appConfig.apiUrl + url)
+      .get(appConfig.apiUrl)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
@@ -29,12 +29,12 @@ export const http = {
     }
 
     const resp = await req;
-
+    
     return resp.body;
   },
-  get: (url, opts = {}) => {
+  get: () => {
     let req = superagent
-      .get(appConfig.apiUrl + url)
+      .get(appConfig.apiUrl)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {

@@ -1,22 +1,46 @@
-import Styles from '../../styles/catalog.module.css';
+import {
+  DesktopOutlined,
+  EllipsisOutlined,
+  LaptopOutlined
+} from '@ant-design/icons';
+import { Menu } from 'antd';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../storeContext';
 
-const Sidebar = ({ dataList }) => {
+const Sidebar = () => {
+  const store = useStore()
   return (
-    <div className={Styles.sidebar}>
-      <header className={Styles.title}>
-        <p>Category</p>
-      </header>
-      <span>
-          <ul>
-            <li>
-              <a>all</a>
-            </li>
-            {/* some Category */}
-          </ul>
-        </span>
-      <main></main>
-    </div>
+    <Menu
+      defaultSelectedKeys={'1'}
+      onChange={(e) => console.log(e)}
+      items={[
+        {
+          key: '1',
+          icon: <EllipsisOutlined />,
+          label: 'All Category',
+          onClick: () => {
+            store.filterData()
+          },
+        },
+        {
+          key: 'Computer',
+          icon: <DesktopOutlined />,
+          label: 'Personal Computer',
+          onClick: (e) => {
+            store.filterData(e.key)
+          },
+        },
+        {
+          key: 'Laptop',
+          icon: <LaptopOutlined />,
+          label: 'Laptop',
+          onClick: (e) => {
+            store.filterData(e.key)
+          },
+        },
+      ]}
+    />
   );
 };
 
-export default Sidebar;
+export default observer(Sidebar);

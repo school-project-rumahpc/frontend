@@ -1,20 +1,27 @@
-// import Form from '../components/landing/form';
-import Background from '../components/landing/background';
-import FormPage from '../components/landing/form';
-import Navbar from '../components/landing/header';
-import Styles from '../styles/home.module.css';
+import Background from "../components/landing/background";
+import FormPage from "../components/landing/form";
+import Navbar from "../components/landing/header";
+import styles from "../styles/home.module.css";
+import { TokenUtil } from "../utils/token";
 
 const Home = () => {
+  //user check
+  TokenUtil.loadToken();
+  if (TokenUtil.accessToken) {
+    window.location.href = '/catalog'
+    return;
+  }
+
   return (
-    <div className={Styles.container}>
-      <main className={Styles.main}>
+    <div className={styles.container}>
+      <main className={styles.main}>
         <Navbar />
         <FormPage />
-        <footer style={{ position: 'absolute', bottom: 0 }}>
-          <h5 style={{ color: 'GrayText' }}>Copyright &#169; RumahPc 2022</h5>
+        <footer style={{ marginTop: "auto", marginBottom: "20px" }}>
+          <h5 style={{ color: "GrayText" }}>Copyright &#169; RumahPc 2022</h5>
         </footer>
       </main>
-      <section className={Styles.bg}>
+      <section className={styles.bg}>
         <Background />
       </section>
     </div>

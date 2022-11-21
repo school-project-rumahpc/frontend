@@ -5,21 +5,25 @@ const Custom404 = () => {
     <div
       style={{
         display: 'flex',
-        paddingTop:'30vh',
+        paddingTop: '30vh',
         alignItems: 'center',
-        flexDirection:'column',
+        flexDirection: 'column',
         height: '100vh',
         backgroundColor: 'rgb(0, 152, 103, 0.1)',
       }}
     >
       <span style={{ textAlign: 'center' }} className='animated'>
-        <h2 style={{WebkitTextStroke:'2px #009867'}}>404 | Page Not Found</h2>
-        <h2 style={{color:'#009867'}}>404 | Page Not Found</h2>
+        <h2 style={{ WebkitTextStroke: '2px #009867' }}>
+          404 | Page Not Found
+        </h2>
+        <h2 style={{ color: '#009867' }}>404 | Page Not Found</h2>
       </span>
-      <div style={{}}>
-      <Link href={'/catalog'}>
-        <p style={{ cursor: 'pointer' }}>Back?</p>
-      </Link>        
+      <div>
+        <Link href={'/'}>
+          <a>
+            <p style={{ cursor: 'pointer' }}>Back?</p>
+          </a>
+        </Link>
       </div>
     </div>
   );
