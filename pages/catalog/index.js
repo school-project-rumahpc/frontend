@@ -5,17 +5,13 @@ import { useState } from 'react';
 import Navbar from '../../components/bar/navbar';
 import Sidebar from '../../components/bar/sidebar';
 import Products from '../../components/product list/products';
-const { Header, Content, Sider } = Layout;
+const { Footer,Header, Content, Sider } = Layout;
 
 const Catalog = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [key, setKey] = useState(1)
-  const getKey =(key)=>{
-    setKey(key)
-  }
   
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' , maxHeight: '100vh'}}>
       <Sider
         style={{
           borderRight: '3px solid #1ba675',
@@ -33,9 +29,9 @@ const Catalog = () => {
           onClick={() => setCollapsed(!collapsed)}
           block
         />
-        <Sidebar currentKey={getKey}/>
+        <Sidebar/>
       </Sider>
-      <Layout>
+      <Layout style={{maxHeight:'100vh', overflowY:'scroll'}}>
         <Header
           style={{
             boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
@@ -44,9 +40,10 @@ const Catalog = () => {
         >
           <Navbar />
         </Header>
-        <Content>
+        <Content style={{minHeight:'max-content'}}>
           <Products/>
         </Content>
+        <Footer>Copyright all rights reserved</Footer>
       </Layout>
     </Layout>
   );

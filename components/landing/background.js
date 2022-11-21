@@ -1,8 +1,8 @@
-import Styles from '../../styles/background.module.css'
+import styles from '../../styles/background.module.css';
 
 const Background = () => {
   return (
-    <div className={Styles.container}>
+    <div className={styles.container}>
         <span>
         <h1>Rumah + Pc</h1>
         <h5>find it, like it, pick it</h5>

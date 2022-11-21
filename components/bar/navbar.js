@@ -2,7 +2,7 @@ import { Col, Input, Row } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import Styles from '../../styles/header.module.css';
+import styles from '../../styles/header.module.css';
 import UserDrawer from '../user';
 
 const Navbar = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <>
       <Row justify='space-between' align='middle' style={{ height: '100px' }}>
-        <Col className={Styles.logo}>
+        <Col className={styles.logo}>
           <Link href={'/catalog'}>
             <a>
               <Image
@@ -44,7 +44,7 @@ const Navbar = () => {
           />
         </Col>
         <Col>
-          <div className={Styles.icon}>
+          <div className={styles.icon}>
             <Link href={'/our-retail'}>
               <a>
                 <Image src={'/store.svg'} width={35} height={35} priority />
@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
         </Col>
         <Col>
-          <div className={Styles.icon}>
+          <div className={styles.icon}>
             <Link href={'/catalog'}>
               <a>
                 <Image src={'/cart.svg'} width={35} height={35} priority />
@@ -62,10 +62,10 @@ const Navbar = () => {
           </div>
         </Col>
         <Col>
-          <div className={Styles.user}>
-            <div id={Styles[1]}></div>
-            <div id={Styles[2]}></div>
-            <div id={Styles[3]}></div>
+          <div className={styles.user}>
+            <div id={styles[1]}></div>
+            <div id={styles[2]}></div>
+            <div id={styles[3]}></div>
             <div>
               <a onClick={showDrawer}>
                 <Image

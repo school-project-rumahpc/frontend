@@ -1,46 +1,42 @@
-import { Button, Spin } from 'antd';
+import { Button, Empty, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useStore } from '../../components/storeContext';
-import { http } from '../../utils/http';
+import styles from '../../styles/product.module.css';
 
 const List = ({ item }) => {
-  console.log(item);
+  // console.log(item);
   return (
-    <ul key={item.id}>
+    <div className={styles['data-wrapper']}>
       {item.products.map((e) => {
         return (
-          <>
+          <ul key={e.id} title={e.product_name}>
             <li>{e.product_name}</li>
-            <li><Button onClick={()=>console.log(e.id)}>Get id</Button></li>
-          </>
+            <li>Rp.{e.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}</li>
+            <li>
+              <Button size='small' onClick={() => console.log(e.id)}>
+                Get id
+              </Button>
+            </li>
+          </ul>
         );
       })}
-    </ul>
+    </div>
   );
 };
 
 const Products = () => {
   const store = useStore();
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    http
-      .get()
-      .then(({ body }) => {
-        store.loadData(body);
-        setLoading(false);
-      })
-      .catch(() => {
-        throw new Error('something went wrong');
-      });
+    store.loadData();
   }, [store]);
 
-  if (loading) {
+  if (store.status === 'pending') {
     return (
       <Spin
         style={{
           display: 'flex',
-          height: '100vh',
+          height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -48,36 +44,35 @@ const Products = () => {
       />
     );
   }
+  //if no data
   if (!store.allData) {
     return (
       <div
         style={{
           height: '100%',
           display: 'flex',
-          justifyContent: 'center',
           alignItems: 'center',
-          paddingBottom: '100px',
+          justifyContent: 'center',
         }}
       >
-        <h1 style={{ fontSize: '18px', textAlign: 'center' }}>
-          something went wrong!
-          <br />
-          <a style={{ color: 'blue' }} onClick={() => window.location.reload}>
-            Refresh?
-          </a>
-        </h1>
+        <Empty>
+          <Button type='link' onClick={() => window.location.reload()}>
+            Reload
+          </Button>
+        </Empty>
       </div>
     );
   }
   return (
     <>
-      {store.allData.map((e) => {
+      {store.filteredData.map((e) => {
         return (
-          <div key={e.id}>
-            <h1>{e.category_name}</h1>
+          <section className={styles.container} key={e.id}>
+            <div className={styles.header}>
+              <h1>{e.category_name}</h1>
+            </div>
             <List item={e} />
-            <hr />
-          </div>
+          </section>
         );
       })}
     </>

@@ -1,13 +1,14 @@
 import {
   DesktopOutlined,
   EllipsisOutlined,
-  LaptopOutlined,
+  LaptopOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { useRouter } from 'next/router';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../storeContext';
 
-const Sidebar = (props) => {
-  const router = useRouter();
+const Sidebar = () => {
+  const store = useStore()
   return (
     <Menu
       defaultSelectedKeys={'1'}
@@ -17,27 +18,24 @@ const Sidebar = (props) => {
           key: '1',
           icon: <EllipsisOutlined />,
           label: 'All Category',
-          title: null,
           onClick: () => {
-            // router.push('/');
+            store.filterData()
           },
         },
         {
-          key: '2',
+          key: 'Computer',
           icon: <DesktopOutlined />,
           label: 'Personal Computer',
-          title: null,
-          onClick: () => {
-            // router.push('/catalog/Computer');
+          onClick: (e) => {
+            store.filterData(e.key)
           },
         },
         {
-          key: '3',
+          key: 'Laptop',
           icon: <LaptopOutlined />,
           label: 'Laptop',
-          title: null,
-          onClick: () => {
-            // router.push('/catalog/Laptop');
+          onClick: (e) => {
+            store.filterData(e.key)
           },
         },
       ]}
@@ -45,4 +43,4 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+export default observer(Sidebar);

@@ -2,7 +2,7 @@ import { Alert, AutoComplete, Button, Form, Input, message, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { appConfig } from '../../config/appConfig';
-import Styles from '../../styles/home.module.css';
+import styles from '../../styles/home.module.css';
 import { antdCustom } from '../../utils/antdCustom';
 import { http } from '../../utils/http';
 import { TokenUtil } from '../../utils/token';
@@ -178,7 +178,7 @@ const Register = () => {
 
 const FormPage = () => {
   return (
-    <div className={Styles['form-container']}>
+    <div className={styles['form-container']}>
       <Tabs
         centered
         size='large'
