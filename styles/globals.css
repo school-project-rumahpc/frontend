@@ -24,6 +24,7 @@ a {
   cursor: pointer;
 }
 * {
+  scroll-behavior: smooth !important;
   box-sizing: border-box;
   font-family: Nova Flat, sans-serif;
 }
@@ -103,4 +104,7 @@ a {
 }
 .ant-card-body{
   padding: 0 12px !important
+}
+.ant-card-meta-detail > div:not(:last-child){
+  margin-bottom: 0 !important;
 }

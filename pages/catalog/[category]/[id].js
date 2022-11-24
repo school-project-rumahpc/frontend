@@ -60,7 +60,7 @@ const Product = () => {
                 backgroundColor: '#f8f8f8',
               }}
             >
-              <h1>{store.item.product_name}</h1>
+              <h1>{store.item.name}</h1>
             </Col>
           </Row>
         </Layout>

@@ -1,7 +1,7 @@
 import { Col, Divider, Layout, Row } from 'antd';
 import Image from 'next/image';
 import Navbar from '../../components/bar/navbar';
-import { Custom } from '../../utils/customHelper';
+import { Custom } from '../../utils/custom';
 const { Header, Content } = Layout;
 
 const OurShop = () => {

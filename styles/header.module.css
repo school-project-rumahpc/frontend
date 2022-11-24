@@ -26,6 +26,9 @@ margin-right: 30px;
 .icon img:hover {
   transform: translateY(-2px);
 }
+.logo,.icon img{
+transition: all 150ms ease-in-out;
+}
 .user {
   display: grid;
   place-items: center;
@@ -59,9 +62,8 @@ margin-right: 30px;
   margin-left: -30px;
   opacity: 0.2;
 }
-.icon:focus-visible,
-.logo:focus-visible {
-  transform: translateY(-10px);
+.logo:hover {
+  transform: scale(1.1);
 }
 .icon {
   margin-right: 35px;
