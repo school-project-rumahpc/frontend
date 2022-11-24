@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Custom404 = () => {
+  const router = useRouter()
   return (
     <div
       style={{
@@ -19,11 +21,9 @@ const Custom404 = () => {
         <h2 style={{ color: '#009867' }}>404 | Page Not Found</h2>
       </span>
       <div>
-        <Link href={'/'}>
-          <a>
-            <p style={{ cursor: 'pointer' }}>Back?</p>
+          <a onClick={()=>router.back()}>
+            <p style={{color:'blue', cursor: 'pointer' }}>Back?</p>
           </a>
-        </Link>
       </div>
     </div>
   );

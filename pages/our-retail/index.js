@@ -1,28 +1,14 @@
 import { Col, Divider, Layout, Row } from 'antd';
 import Image from 'next/image';
 import Navbar from '../../components/bar/navbar';
+import { Custom } from '../../utils/customHelper';
 const { Header, Content } = Layout;
 
 const OurShop = () => {
   return (
     <Layout style={{ minHeight: '100vh', backgroundColor: '#009867' }}>
-      <Header
-        style={{
-          boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
-          height: '100px',
-          zIndex: '1',
-        }}
-      >
-        <Navbar />
-      </Header>
-      <Content
-        style={{
-          boxShadow: ' 0px 0 50px 30px rgba(0, 0, 0, 0.25)',
-          margin: '0 120px',
-          height: '100%',
-          backgroundColor: '#fff',
-        }}
-      >
+      <Navbar />
+      <Content style={Custom.contentStyle}>
         <Layout style={{ backgroundColor: '#fff' }}>
           <Row align='middle'>
             <Divider
@@ -59,7 +45,7 @@ const OurShop = () => {
               <a
                 href='https://g.page/dignitas-id?share'
                 target={'_blank'}
-                style={{ color: 'crimson' }}
+                style={{ color: 'blue' }}
               >
                 Get a direction here.
               </a>

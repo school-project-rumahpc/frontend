@@ -1,24 +1,44 @@
-import { Button, Empty, Spin } from 'antd';
+import { Card } from 'antd';
 import { observer } from 'mobx-react-lite';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { useStore } from '../../components/storeContext';
 import styles from '../../styles/product.module.css';
-
-const List = ({ item }) => {
+import { Err, Loading } from '../loadingAndErr';
+const List = ({ item, cat }) => {
   // console.log(item);
   return (
     <div className={styles['data-wrapper']}>
       {item.products.map((e) => {
         return (
-          <ul key={e.id} title={e.product_name}>
-            <li>{e.product_name}</li>
-            <li>Rp.{e.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}</li>
-            <li>
-              <Button size='small' onClick={() => console.log(e.id)}>
-                Get id
-              </Button>
-            </li>
-          </ul>
+          <Card
+          key={e.id}
+            style={{ height: '350px', minWidth: '250px' }}
+            bordered={false}
+            cover={
+              <Image
+                style={{
+                  backgroundImage:'url(/logo.svg)',
+                  backgroundRepeat:'no-repeat',
+                  backgroundPosition:'center'
+                }}
+                src={e.images[0]}
+                alt={e.product_name}
+                width={250}
+                height={280}
+                loading='lazy'
+                // placeholder='blur'
+                // blurDataURL='/cart.svg'
+              />
+            }
+          >
+            <Card.Meta
+              title={`Rp.${e.price
+                .toString()
+                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
+              description={e.product_name}
+            />
+          </Card>
         );
       })}
     </div>
@@ -32,36 +52,11 @@ const Products = () => {
   }, [store]);
 
   if (store.status === 'pending') {
-    return (
-      <Spin
-        style={{
-          display: 'flex',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        size='large'
-      />
-    );
+    return <Loading />;
   }
   //if no data
-  if (!store.allData) {
-    return (
-      <div
-        style={{
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Empty>
-          <Button type='link' onClick={() => window.location.reload()}>
-            Reload
-          </Button>
-        </Empty>
-      </div>
-    );
+  if (!store.allData && store.status === 'error') {
+    return <Err />;
   }
   return (
     <>
@@ -71,7 +66,7 @@ const Products = () => {
             <div className={styles.header}>
               <h1>{e.category_name}</h1>
             </div>
-            <List item={e} />
+            <List item={e} cat={e.category_name} />
           </section>
         );
       })}

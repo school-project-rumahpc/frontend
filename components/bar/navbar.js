@@ -1,9 +1,10 @@
-import { Col, Input, Row } from 'antd';
+import { Col, Input, Row, Layout } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from '../../styles/header.module.css';
 import UserDrawer from '../user';
+const { Header } = Layout;
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,8 +22,20 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <Row justify='space-between' align='middle' style={{ height: '100px' }}>
+    <Header
+      style={{
+        height: '100px',
+        zIndex: '1',
+        boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
+      }}
+    >
+      <Row
+        justify='space-between'
+        align='middle'
+        style={{
+          height: '100px',
+        }}
+      >
         <Col className={styles.logo}>
           <Link href={'/catalog'}>
             <a>
@@ -80,8 +93,8 @@ const Navbar = () => {
           </div>
         </Col>
       </Row>
-      <UserDrawer drawerClose={drawerClose} open={open}/>
-    </>
+      <UserDrawer drawerClose={drawerClose} open={open} />
+    </Header>
   );
 };
 
