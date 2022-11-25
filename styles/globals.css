@@ -108,3 +108,6 @@ a {
 .ant-card-meta-detail > div:not(:last-child){
   margin-bottom: 0 !important;
 }
+.ant-card-bordered{
+  border: 3px solid #009867 !important
+}

@@ -6,7 +6,6 @@ const Loading = () => {
   return (
     <Spin
       style={{
-        marginTop: '35vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

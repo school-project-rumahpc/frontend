@@ -1,12 +1,12 @@
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Card } from "antd";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import { useStore } from "../../components/storeContext";
 import styles from "../../styles/product.module.css";
 import { Err, Loading } from "../loadingAndErr";
-import { useRouter } from "next/router";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 const List = ({ item, cat }) => {
   const router = useRouter();
   const dataWrapper = useRef();
@@ -16,7 +16,6 @@ const List = ({ item, cat }) => {
       <Button
         style={{ position: "sticky", top: "40%", left: "0", zIndex:'1'}}
         shape="circle"
-        type="primary"
         onClick={() => (dataWrapper.current.scrollLeft -= 350)}
       >
         <LeftOutlined />

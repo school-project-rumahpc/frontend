@@ -1,5 +1,6 @@
 import { Col, Input, Row, Layout } from 'antd';
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from '../../styles/header.module.css';
@@ -8,6 +9,7 @@ const { Header } = Layout;
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter() 
   //Drawer trigger
   const showDrawer = () => {
     setOpen(true);
@@ -18,7 +20,8 @@ const Navbar = () => {
 
   //TODO: search handler
   const onSearch = (value) => {
-    console.log(value);
+     console.log(value)
+    //router.push('/catalog')
   };
 
   return (

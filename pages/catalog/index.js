@@ -43,7 +43,10 @@ const Catalog = () => {
             <i style={{ color: 'crimson' }}>
               <HeartFilled color='crimson' />
             </i>{' '}
-            by{' '}
+            by&nbsp;
+            <a href='https://github.com/LmaoDarwin'>Darwin </a>
+            &&nbsp;
+            <a href='https://github.com/arilramadani24'>Aril</a>
           </h5>
         </Footer>
       </Layout>
