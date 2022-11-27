@@ -1,49 +1,54 @@
-import { LeftOutlined, MenuOutlined } from '@ant-design/icons';
+import { HeartFilled, LeftOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import Navbar from '../../components/bar/navbar';
 import Sidebar from '../../components/bar/sidebar';
 import Products from '../../components/product list/products';
-const { Footer,Header, Content, Sider } = Layout;
+const { Footer, Content, Sider } = Layout;
 
 const Catalog = () => {
   const [collapsed, setCollapsed] = useState(false);
-  
+
   return (
-    <Layout style={{ minHeight: '100vh' , maxHeight: '100vh'}}>
+    <Layout style={{ minHeight: '100vh', maxHeight: '100vh' }}>
       <Sider
         style={{
+          minHeight: '100vh',
           borderRight: '3px solid #1ba675',
-          backgroundColor:'#fff'
+          backgroundColor: '#fff',
         }}
         trigger={null}
         collapsible
         collapsed={collapsed}
-        width={300}
+        width={250}
       >
         <Button
-        style={{height:'100px'}}
-          icon={collapsed?<MenuOutlined/>:<LeftOutlined/>}
+          style={{ height: '100px' }}
+          icon={collapsed ? <MenuOutlined /> : <LeftOutlined />}
           type='link'
           onClick={() => setCollapsed(!collapsed)}
           block
         />
-        <Sidebar/>
+        <Sidebar />
       </Sider>
-      <Layout style={{maxHeight:'100vh', overflowY:'scroll'}}>
-        <Header
-          style={{
-            boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
-            height: '100px',
-          }}
-        >
-          <Navbar />
-        </Header>
-        <Content style={{minHeight:'max-content'}}>
-          <Products/>
+      <Layout style={{minHeight: '100vh', maxHeight: '100vh', overflowY: 'scroll' }}>
+        <Navbar />
+        <Content style={{ minHeight: 'max-content' }}>
+          <Products />
         </Content>
-        <Footer>Copyright all rights reserved</Footer>
+        <Footer>
+          <h5 style={{ color: 'GrayText' }}>
+            Made with{' '}
+            <i style={{ color: 'crimson' }}>
+              <HeartFilled color='crimson' />
+            </i>{' '}
+            by&nbsp;
+            <a target={'_blank'} href='https://github.com/LmaoDarwin'>Darwin </a>
+            &&nbsp;
+            <a target={'_blank'} href='https://github.com/arilramadani24'>Aril</a>
+          </h5>
+        </Footer>
       </Layout>
     </Layout>
   );

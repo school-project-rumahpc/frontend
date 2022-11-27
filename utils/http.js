@@ -32,9 +32,9 @@ export const http = {
     
     return resp.body;
   },
-  get: () => {
+  get: (url) => {
     let req = superagent
-      .get(appConfig.apiUrl)
+      .get(appConfig.apiUrl+url)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {

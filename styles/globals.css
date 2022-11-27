@@ -11,6 +11,14 @@ h4,
 h5 {
   margin-bottom: 0 !important;
 }
+ol,
+ul,
+dl {
+  margin-bottom: 0 !important;
+}
+li{
+  list-style: none;
+}
 a:hover,
 a:focus {
   text-decoration: underline !important;
@@ -19,6 +27,7 @@ a {
   cursor: pointer;
 }
 * {
+  scroll-behavior: smooth !important;
   box-sizing: border-box;
   font-family: Nova Flat, sans-serif;
 }
@@ -87,16 +96,21 @@ a {
 .ant-input-group .ant-input-affix-wrapper:not(:last-child) {
   border-right: none !important;
 }
-.ant-input-affix-wrapper:focus,
-.ant-input-affix-wrapper-focused {
-  box-shadow: none !important;
-}
-.ant-input-affix-wrapper > .ant-input{
+.ant-input-affix-wrapper > .ant-input {
   border-radius: 0 !important;
 }
-.ant-tabs-top > .ant-tabs-nav::before{
+.ant-tabs-top > .ant-tabs-nav::before {
   border-bottom: none !important;
 }
-.ant-drawer-title{
+.ant-drawer-title {
   font-size: larger !important;
+}
+.ant-card-body{
+  padding: 0 12px !important
+}
+.ant-card-meta-detail > div:not(:last-child){
+  margin-bottom: 0 !important;
+}
+.ant-card-bordered{
+  border: 3px solid #009867 !important
 }

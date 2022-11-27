@@ -1,77 +1,90 @@
-import { Button, Empty, Spin } from 'antd';
-import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { useStore } from '../../components/storeContext';
-import styles from '../../styles/product.module.css';
-
-const List = ({ item }) => {
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { Button, Card } from "antd";
+import { observer } from "mobx-react-lite";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
+import { useStore } from "../../components/storeContext";
+import styles from "../../styles/product.module.css";
+import { Custom } from "../../utils/custom";
+import { Err, Loading } from "../loadingAndErr";
+const List = ({ item, cat }) => {
+  const router = useRouter();
+  const dataWrapper = useRef();
   // console.log(item);
   return (
-    <div className={styles['data-wrapper']}>
+    <div className={styles["data-wrapper"]} ref={dataWrapper}>
+      <Button
+        style={{ position: "sticky", top: "40%", left: "0", zIndex:'1'}}
+        shape="circle"
+        onClick={() => (dataWrapper.current.scrollLeft -= 350)}
+      >
+        <LeftOutlined />
+      </Button>
       {item.products.map((e) => {
         return (
-          <ul key={e.id} title={e.product_name}>
-            <li>{e.product_name}</li>
-            <li>Rp.{e.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}</li>
-            <li>
-              <Button size='small' onClick={() => console.log(e.id)}>
-                Get id
-              </Button>
-            </li>
-          </ul>
+          <Card
+            className={styles["ant-card"]}
+            onClick={() => router.push(`/catalog/${cat}/${e.id}`)}
+            hoverable
+            key={e.id}
+            style={{ height: "350px", minWidth: "250px" }}
+            bordered={false}
+            cover={
+              <Image
+                style={Custom.loadingGif}
+                src={e.images[0]}
+                alt={e.name}
+                width={250}
+                height={280}
+                loading="lazy"
+                title={e.name}
+              />
+            }
+          >
+            <Card.Meta
+              className={styles["ant-card-meta"]}
+              title={`Rp.${e.price
+                .toString()
+                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
+              description={e.name}
+            />
+          </Card>
         );
       })}
+      <Button
+        style={{ position: "sticky", top: "40%", right: "0" }}
+        shape="circle"
+        onClick={() => (dataWrapper.current.scrollLeft += 350)}
+      >
+        <RightOutlined />
+      </Button>
     </div>
   );
 };
 
 const Products = () => {
-  const store = useStore();
+  const {productStore} = useStore();
   useEffect(() => {
-    store.loadData();
-  }, [store]);
+    productStore.loadData();
+  }, [productStore]);
 
-  if (store.status === 'pending') {
-    return (
-      <Spin
-        style={{
-          display: 'flex',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        size='large'
-      />
-    );
+  if (productStore.status === "pending") {
+    return <Loading />;
   }
   //if no data
-  if (!store.allData) {
-    return (
-      <div
-        style={{
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Empty>
-          <Button type='link' onClick={() => window.location.reload()}>
-            Reload
-          </Button>
-        </Empty>
-      </div>
-    );
+  if (!productStore.allProducts && productStore.status === "error") {
+    return <Err />;
   }
   return (
     <>
-      {store.filteredData.map((e) => {
+      {productStore.filteredData.map((e) => {
         return (
           <section className={styles.container} key={e.id}>
             <div className={styles.header}>
               <h1>{e.category_name}</h1>
             </div>
-            <List item={e} />
+            <List item={e} cat={e.category_name} />
           </section>
         );
       })}

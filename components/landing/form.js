@@ -3,13 +3,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { appConfig } from '../../config/appConfig';
 import styles from '../../styles/home.module.css';
-import { antdCustom } from '../../utils/antdCustom';
+import { Custom } from '../../utils/custom';
 import { http } from '../../utils/http';
 import { TokenUtil } from '../../utils/token';
-
 //err submit handler
 const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
+  console.log('Submit failed');
 };
 
 const Login = () => {
@@ -19,23 +18,23 @@ const Login = () => {
   const onLogin = (values) => {
     setLoading(true);
     const res = http.auth(appConfig.logInUrl, values);
-    res.end((err, res) => {
-      if (err && err.response.body.message) {
-        // error handling
-        console.log(err.response);
-        setMsg(err.response.body.message);
+    res
+      .then(({ body }) => {
+        //set jwt to local storage
+        TokenUtil.setAccessToken(body.access_token);
+        TokenUtil.persistToken();
+        const jwt = TokenUtil.decodedToken();
+        console.log(jwt);
+        message.success(`Login Succes, welcome ${jwt.username}`);
         setLoading(false);
-        return;
-      }
-      //set jwt to local storage
-      TokenUtil.setAccessToken(res.body.access_token);
-      TokenUtil.persistToken();
-      const jwt = TokenUtil.decodedToken();
-      console.log(jwt);
-      message.success(`Login Succes, welcome ${jwt.username}`);
-      setLoading(false);
-      router.push('/catalog');
-    });
+        router.push('/catalog');
+      })
+      .catch(({ response }) => {
+        console.log(response.body.message);
+        // error handling
+        setMsg(response.body.message);
+        setLoading(false);
+      });
   };
 
   return (
@@ -43,7 +42,7 @@ const Login = () => {
       layout='vertical'
       onFinish={onLogin}
       onFinishFailed={onFinishFailed}
-      validateMessages={antdCustom.validateMSG}
+      validateMessages={Custom.validateMSG}
       size='large'
     >
       <Form.Item
@@ -86,18 +85,19 @@ const Register = () => {
   const onRegister = (values) => {
     setLoading(true);
     const res = http.auth(appConfig.registerUrl, values);
-    res.end((err, res) => {
-      if (err && err.response.body.message) {
-        setMsg(err.response.body.message);
+    res
+      .then((res) => {
+        message.success(`Register Success, now please login`);
+        console.log(res);
+        setLoading(false);
+      })
+      .catch(({ response }) => {
+        // console.log(response)
+        setMsg(response.body.message);
         setLoading(false);
         return;
-      }
-      message.success(`Register Success, now please login`);
-      // console.log(res);
-      setLoading(false);
-    });
+      });
   };
-
   const [options, setOptions] = useState([]);
   const handleDropdown = (value) => {
     let optList = [];
@@ -115,7 +115,7 @@ const Register = () => {
       layout='vertical'
       onFinish={onRegister}
       onFinishFailed={onFinishFailed}
-      validateMessages={antdCustom.validateMSG}
+      validateMessages={Custom.validateMSG}
       size='large'
       autoComplete='off'
     >
@@ -191,5 +191,4 @@ const FormPage = () => {
     </div>
   );
 };
-
 export default FormPage;
