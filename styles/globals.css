@@ -16,6 +16,9 @@ ul,
 dl {
   margin-bottom: 0 !important;
 }
+li{
+  list-style: none;
+}
 a:hover,
 a:focus {
   text-decoration: underline !important;

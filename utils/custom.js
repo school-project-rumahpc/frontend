@@ -10,7 +10,12 @@ export const Custom = {
   contentStyle:{
     boxShadow: ' 0px 0 50px 30px rgba(0, 0, 0, 0.25)',
     margin: '0 100px',
-    height: '100%',
     backgroundColor: '#fff',
+  },
+  loadingGif:{
+    backgroundImage: "url(/loading.gif)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "70px",
   }
 };

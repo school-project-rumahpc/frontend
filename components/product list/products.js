@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import { useStore } from "../../components/storeContext";
 import styles from "../../styles/product.module.css";
+import { Custom } from "../../utils/custom";
 import { Err, Loading } from "../loadingAndErr";
 const List = ({ item, cat }) => {
   const router = useRouter();
@@ -31,12 +32,7 @@ const List = ({ item, cat }) => {
             bordered={false}
             cover={
               <Image
-                style={{
-                  backgroundImage: "url(/loading.gif)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "70px",
-                }}
+                style={Custom.loadingGif}
                 src={e.images[0]}
                 alt={e.name}
                 width={250}
@@ -68,21 +64,21 @@ const List = ({ item, cat }) => {
 };
 
 const Products = () => {
-  const store = useStore();
+  const {productStore} = useStore();
   useEffect(() => {
-    store.loadData();
-  }, [store]);
+    productStore.loadData();
+  }, [productStore]);
 
-  if (store.status === "pending") {
+  if (productStore.status === "pending") {
     return <Loading />;
   }
   //if no data
-  if (!store.allData && store.status === "error") {
+  if (!productStore.allProducts && productStore.status === "error") {
     return <Err />;
   }
   return (
     <>
-      {store.filteredData.map((e) => {
+      {productStore.filteredData.map((e) => {
         return (
           <section className={styles.container} key={e.id}>
             <div className={styles.header}>

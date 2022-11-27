@@ -6,6 +6,7 @@ const Loading = () => {
   return (
     <Spin
       style={{
+        minHeight:'100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -15,7 +16,7 @@ const Loading = () => {
   );
 };
 const Err = ({id}) => {
-  const store = useStore();
+  const {productStore} = useStore();
   return (
     <div
       style={{
@@ -29,7 +30,7 @@ const Err = ({id}) => {
         <Button
           type='link'
           style={{ color: 'blue' }}
-          onClick={() => {store.loadData();store.loadItem(id)}}
+          onClick={() => {productStore.loadData();productStore.loadItem(id)}}
         >
           Reload
         </Button>

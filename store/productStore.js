@@ -1,49 +1,52 @@
-import { configure, makeAutoObservable } from 'mobx';
-import { http } from '../utils/http';
+import { configure, makeAutoObservable } from "mobx";
+import { http } from "../utils/http";
 configure({
-  enforceActions: 'never',
+  enforceActions: "never",
 });
-class createData {
-  allData = null;
+export class createProductStore {
+  ctx;
+  allProducts = null;
   item = null;
   filteredData = null;
-  status = 'pending';
+  status = "pending";
 
-  constructor() {
+  constructor(ctx) {
     makeAutoObservable(this);
+    this.ctx = ctx;
   }
 
   loadData() {
-    if (!this.allData) {
-      this.status = 'pending';
+    if (!this.allProducts) {
+      this.status = "pending";
       http
-        .get('/category')
+        .get("/category")
         .then(({ body }) => {
-          this.allData = body;
-          this.filteredData = this.allData;
-          this.status = 'success';
+          this.allProducts = body;
+          this.filteredData = this.allProducts;
+          this.status = "success";
         })
         .catch(() => {
-          this.status = 'error';
+          this.status = "error";
         });
     }
   }
   loadItem(id) {
-    this.status = 'pending';
-    http
-      .get(`/product/${id}`)
-      .then(({ body }) => {
-        this.item = body;
-        console.log(this.item);
-        this.status = 'success';
-      })
-      .catch(() => {
-        this.status = 'error';
-        console.log(this.status)
-      });
+    this.item = null;
+    this.status = "pending";
+    if (!this.item) {
+      http
+        .get(`/product/${id}`)
+        .then(({ body }) => {
+          this.item = body;
+          this.status = "success";
+        })
+        .catch(() => {
+          this.status = "error";
+        });
+    }
   }
   filterData(category) {
-    this.filteredData = this.allData;
+    this.filteredData = this.allProducts;
     if (category) {
       this.filteredData = this.filteredData.filter(
         (e) => e.category_name === category
@@ -51,7 +54,3 @@ class createData {
     }
   }
 }
-
-const DataStore = new createData();
-
-export default DataStore;

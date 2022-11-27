@@ -1,12 +1,12 @@
 import React from "react";
-import DataStore from "../store/productStore";
+import RootStore from "../store/rootStore";
 
 const storeContext = React.createContext();
 
 export const StoreProvider = ({ children }) => {
-  const dataStore = DataStore;
+  const rootStore = RootStore;
   return (
-    <storeContext.Provider value={dataStore}>
+    <storeContext.Provider value={rootStore}>
         {children}
     </storeContext.Provider>
   );

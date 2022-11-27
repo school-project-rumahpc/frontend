@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../storeContext';
 
 const Sidebar = () => {
-  const store = useStore()
+  const {productStore} = useStore()
   return (
     <Menu
       defaultSelectedKeys={'1'}
@@ -19,7 +19,8 @@ const Sidebar = () => {
           icon: <EllipsisOutlined />,
           label: 'All Category',
           onClick: () => {
-            store.filterData()
+            if (!productStore.allProducts)return;
+            productStore.filterData()
           },
         },
         {
@@ -27,7 +28,8 @@ const Sidebar = () => {
           icon: <DesktopOutlined />,
           label: 'Personal Computer',
           onClick: (e) => {
-            store.filterData(e.key)
+            if (!productStore.allProducts)return;
+            productStore.filterData(e.key)
           },
         },
         {
@@ -35,7 +37,8 @@ const Sidebar = () => {
           icon: <LaptopOutlined />,
           label: 'Laptop',
           onClick: (e) => {
-            store.filterData(e.key)
+            if (!productStore.allProducts)return;
+            productStore.filterData(e.key)
           },
         },
       ]}
