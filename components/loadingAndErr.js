@@ -1,5 +1,4 @@
 import { Button, Empty, Spin } from 'antd';
-import { observer } from 'mobx-react-lite';
 import { useStore } from './storeContext';
 
 const Loading = () => {
@@ -26,7 +25,7 @@ const Err = ({id}) => {
         justifyContent: 'center',
       }}
     >
-      <Empty description={'Something went wrong!'}>
+      <Empty description={<p style={{color:'grey'}}>Something went wrong!</p>}>
         <Button
           type='link'
           style={{ color: 'blue' }}
@@ -38,6 +37,5 @@ const Err = ({id}) => {
     </div>
   );
 }
-observer(Err)
 export { Err, Loading };
 

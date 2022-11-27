@@ -11,11 +11,11 @@ import { Err, Loading } from "../loadingAndErr";
 const List = ({ item, cat }) => {
   const router = useRouter();
   const dataWrapper = useRef();
-  // console.log(item);
+  // console.log(cat);
   return (
     <div className={styles["data-wrapper"]} ref={dataWrapper}>
       <Button
-        style={{ position: "sticky", top: "40%", left: "0", zIndex:'1'}}
+        style={{ position: "sticky", top: "40%", left: "0", zIndex: "1" }}
         shape="circle"
         onClick={() => (dataWrapper.current.scrollLeft -= 350)}
       >
@@ -28,7 +28,11 @@ const List = ({ item, cat }) => {
             onClick={() => router.push(`/catalog/${cat}/${e.id}`)}
             hoverable
             key={e.id}
-            style={{ height: "350px", minWidth: "250px" }}
+            style={{
+              backgroundColor: cat === "Laptop" ? "#373737" : null,
+              height: "350px",
+              minWidth: "250px",
+            }}
             bordered={false}
             cover={
               <Image
@@ -44,10 +48,18 @@ const List = ({ item, cat }) => {
           >
             <Card.Meta
               className={styles["ant-card-meta"]}
-              title={`Rp.${e.price
-                .toString()
-                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
-              description={e.name}
+              title={
+                <h3 style={{ color: cat === "Laptop" ? "whitesmoke" : null }}>
+                  {`Rp.${e.price
+                    .toString()
+                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
+                </h3>
+              }
+              description={
+                <h5 style={{ color: cat === "Laptop" ? "whitesmoke" : null }}>
+                  {e.name}
+                </h5>
+              }
             />
           </Card>
         );
@@ -64,7 +76,7 @@ const List = ({ item, cat }) => {
 };
 
 const Products = () => {
-  const {productStore} = useStore();
+  const { productStore } = useStore();
   useEffect(() => {
     productStore.loadData();
   }, [productStore]);
