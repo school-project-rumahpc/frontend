@@ -9,7 +9,7 @@ const UserInfo = () => {
   const router = useRouter();
 
   const user = TokenUtil.decodedToken();
-  console.log(user);
+  // console.log(user);
 
   const logOut = () => {
     TokenUtil.clearAccessToken();

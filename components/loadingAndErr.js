@@ -1,22 +1,18 @@
 import { Button, Empty, Spin } from 'antd';
-import { useStore } from './storeContext';
+import { useRouter } from 'next/router';
 
 const Loading = () => {
   return (
     <Spin
       style={{
-        minWidth:'100vw',
-        minHeight:'100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding:'25px'
       }}
       size='large'
     />
   );
 };
-const Err = ({id}) => {
-  const {productStore} = useStore();
+const Err = () => {
+  const {reload} = useRouter()
   return (
     <div
       style={{
@@ -30,7 +26,7 @@ const Err = ({id}) => {
         <Button
           type='link'
           style={{ color: 'blue' }}
-          onClick={() => {productStore.loadData();productStore.loadItem(id)}}
+          onClick={() => {reload()}}
         >
           Reload
         </Button>

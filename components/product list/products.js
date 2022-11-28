@@ -1,22 +1,22 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { Button, Card } from "antd";
-import { observer } from "mobx-react-lite";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
-import { useStore } from "../../components/storeContext";
-import styles from "../../styles/product.module.css";
-import { Custom } from "../../utils/custom";
-import { Err, Loading } from "../loadingAndErr";
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Button, Card } from 'antd';
+import { observer } from 'mobx-react-lite';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+import { useStore } from '../../components/storeContext';
+import styles from '../../styles/product.module.css';
+import { Custom } from '../../utils/custom';
+import { Err, Loading } from '../loadingAndErr';
 const List = ({ item, cat }) => {
   const router = useRouter();
   const dataWrapper = useRef();
   // console.log(cat);
   return (
-    <div className={styles["data-wrapper"]} ref={dataWrapper}>
+    <div className={styles['data-wrapper']} ref={dataWrapper}>
       <Button
-        style={{ position: "sticky", top: "40%", left: "0", zIndex: "1" }}
-        shape="circle"
+        style={{ position: 'sticky', top: '40%', left: '0', zIndex: '1' }}
+        shape='circle'
         onClick={() => (dataWrapper.current.scrollLeft -= 350)}
       >
         <LeftOutlined />
@@ -24,16 +24,16 @@ const List = ({ item, cat }) => {
       {item.products.map((e) => {
         return (
           <Card
-            className={styles["ant-card"]}
+            className={styles['ant-card']}
             onClick={() => router.push(`/catalog/${cat}/${e.id}`)}
             hoverable
             key={e.id}
             style={{
-              backgroundColor: cat === "Laptop" ? "#373737" : null,
-              height: "350px",
-              minWidth: "250px",
+              padding: '1px',
+              backgroundColor: cat === 'Laptop' ? '#373737' : null,
+              height: '350px',
+              minWidth: '250px',
             }}
-            bordered={false}
             cover={
               <Image
                 style={Custom.loadingGif}
@@ -41,22 +41,22 @@ const List = ({ item, cat }) => {
                 alt={e.name}
                 width={250}
                 height={280}
-                loading="lazy"
+                loading='lazy'
                 title={e.name}
               />
             }
           >
             <Card.Meta
-              className={styles["ant-card-meta"]}
+              className={styles['ant-card-meta']}
               title={
-                <h3 style={{ color: cat === "Laptop" ? "whitesmoke" : null }}>
+                <h3 style={{ color: cat === 'Laptop' ? 'whitesmoke' : null }}>
                   {`Rp.${e.price
                     .toString()
-                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")}`}
+                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
                 </h3>
               }
               description={
-                <h5 style={{ color: cat === "Laptop" ? "whitesmoke" : null }}>
+                <h5 style={{ color: cat === 'Laptop' ? 'whitesmoke' : null }}>
                   {e.name}
                 </h5>
               }
@@ -65,8 +65,8 @@ const List = ({ item, cat }) => {
         );
       })}
       <Button
-        style={{ position: "sticky", top: "40%", right: "0" }}
-        shape="circle"
+        style={{ position: 'sticky', top: '40%', right: '0' }}
+        shape='circle'
         onClick={() => (dataWrapper.current.scrollLeft += 350)}
       >
         <RightOutlined />
@@ -81,11 +81,11 @@ const Products = () => {
     productStore.loadData();
   }, [productStore]);
 
-  if (productStore.status === "pending") {
+  if (productStore.status === 'pending') {
     return <Loading />;
   }
   //if no data
-  if (!productStore.allProducts && productStore.status === "error") {
+  if (!productStore.allProducts && productStore.status === 'error') {
     return <Err />;
   }
   return (
