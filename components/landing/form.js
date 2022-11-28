@@ -24,7 +24,7 @@ const Login = () => {
         TokenUtil.setAccessToken(body.access_token);
         TokenUtil.persistToken();
         const jwt = TokenUtil.decodedToken();
-        console.log(jwt);
+        //console.log(jwt);
         message.success(`Login Succes, welcome ${jwt.username}`);
         setLoading(false);
         router.push('/catalog');

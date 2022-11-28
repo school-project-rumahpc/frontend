@@ -19,6 +19,14 @@ export const http = {
     .use(attachSuperagentLogger)
     return req;
   },
+  search: (query)=>{
+    const req = superagent
+    .get(`${appConfig.apiUrl}/product`)
+    .query({product_name: query})
+    .use(attachSuperagentLogger)
+    
+    return req
+  },
   fetcher: async () => {
     let req = superagent
       .get(appConfig.apiUrl)
