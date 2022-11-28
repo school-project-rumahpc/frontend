@@ -5,6 +5,7 @@ const Loading = () => {
   return (
     <Spin
       style={{
+        minWidth:'100vw',
         minHeight:'100%',
         display: 'flex',
         alignItems: 'center',
