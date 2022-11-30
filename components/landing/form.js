@@ -7,7 +7,7 @@ import { Custom } from '../../utils/custom';
 import { http } from '../../utils/http';
 import { TokenUtil } from '../../utils/token';
 //err submit handler
-const onFinishFailed = (errorInfo) => {
+const onFinishFailed = () => {
   console.log('Submit failed');
 };
 
@@ -88,7 +88,7 @@ const Register = () => {
     res
       .then((res) => {
         message.success(`Register Success, now please login`);
-        console.log(res);
+        // console.log(res);
         setLoading(false);
       })
       .catch(({ response }) => {

@@ -43,7 +43,6 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      console.log(TokenUtil.accessToken);
       req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
@@ -51,6 +50,7 @@ export const http = {
   post: (url, opts) => {
     let req = superagent
       .post(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {

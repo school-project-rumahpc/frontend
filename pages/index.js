@@ -1,4 +1,3 @@
-import { useLayoutEffect } from 'react';
 import Background from '../components/landing/background';
 import FormPage from '../components/landing/form';
 import Navbar from '../components/landing/header';
@@ -9,12 +8,10 @@ TokenUtil.loadToken();
 
 const Home = () => {
   //user check
-  useLayoutEffect(() => {
     if (TokenUtil.accessToken) {
       window.location.href = '/catalog';
       return;
     }
-  }, []);
 
   return (
     <div className={styles.container}>

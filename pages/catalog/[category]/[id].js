@@ -16,7 +16,7 @@ const DetailDisplay = ({ item }) => {
   for (let detailKey in details) {
     detailArr = [...detailArr, `${detailKey} : ${details[detailKey]}`];
   }
-  console.log(detailArr);
+  // console.log(detailArr);
   return (
     <>
       {detailArr.map((i) => (
@@ -26,7 +26,7 @@ const DetailDisplay = ({ item }) => {
   );
 };
 
-const ProductDisplay = ({ productStore , cat}) => {
+const ProductDisplay = observer(({ productStore, cat, cartStore }) => {
   const { item } = productStore;
   const capitalize = { textTransform: 'capitalize' };
   return (
@@ -34,9 +34,9 @@ const ProductDisplay = ({ productStore , cat}) => {
       <Col>
         <Card
           style={{
-            padding:'1px',
-            backgroundColor: cat === "Laptop" ? "#373737" : null,
-            minWidth: "250px",
+            padding: '1px',
+            backgroundColor: cat === 'Laptop' ? '#373737' : null,
+            minWidth: '250px',
           }}
           cover={
             <Image
@@ -51,7 +51,16 @@ const ProductDisplay = ({ productStore , cat}) => {
         >
           <Card.Meta
             style={{ justifyContent: 'right', padding: '10px 0' }}
-            title={<Button size='middle' type='primary'>Add to cart</Button>}
+            title={
+              <Button
+                loading={cartStore.status === 'pending' ? true : false}
+                onClick={() => cartStore.addToCart({ product_id: item.id })}
+                size='middle'
+                type='primary'
+              >
+                Add to cart
+              </Button>
+            }
           />
         </Card>
       </Col>
@@ -69,12 +78,12 @@ const ProductDisplay = ({ productStore , cat}) => {
       </Col>
     </>
   );
-};
+});
 
 const Product = () => {
-  const { productStore } = useStore();
+  const { productStore, cartStore } = useStore();
   const router = useRouter();
-  const cat = router.query.category
+  const cat = router.query.category;
   useEffect(() => {
     productStore.status = 'pending';
     if (router.isReady) {
@@ -99,9 +108,18 @@ const Product = () => {
       <Navbar />
       {/*FIXME: FIX DESCRIPTION ON LONG DESCRIPTION  */}
       <Content style={Custom.contentStyle}>
-        <Row style={{minHeight:'calc(100vh - 100px)', padding:'30px 30px'}} align={'middle'} justify={'center'} gutter={[50, 50]}>
+        <Row
+          style={{ minHeight: 'calc(100vh - 100px)', padding: '30px 30px' }}
+          align={'middle'}
+          justify={'center'}
+          gutter={[50, 50]}
+        >
           {productStore.item ? (
-            <ProductDisplay productStore={productStore} cat={cat}/>
+            <ProductDisplay
+              productStore={productStore}
+              cat={cat}
+              cartStore={cartStore}
+            />
           ) : (
             <Loading />
           )}
