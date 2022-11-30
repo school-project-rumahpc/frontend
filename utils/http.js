@@ -13,19 +13,16 @@ let AuthIntercept = superagentIntercept((err, res) => {
 
 export const http = {
   auth: (url, values) => {
-    const req = superagent
-    .post(url)
-    .send(values)
-    .use(attachSuperagentLogger)
+    const req = superagent.post(url).send(values).use(attachSuperagentLogger);
     return req;
   },
-  search: (query)=>{
+  search: (query) => {
     const req = superagent
-    .get(`${appConfig.apiUrl}/product`)
-    .query({product_name: query})
-    .use(attachSuperagentLogger)
-    
-    return req
+      .get(`${appConfig.apiUrl}/product`)
+      .query({ product_name: query })
+      .use(attachSuperagentLogger);
+
+    return req;
   },
   fetcher: async () => {
     let req = superagent
@@ -37,16 +34,17 @@ export const http = {
     }
 
     const resp = await req;
-    
+
     return resp.body;
   },
   get: (url) => {
     let req = superagent
-      .get(appConfig.apiUrl+url)
+      .get(appConfig.apiUrl + url)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      console.log(TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
@@ -56,7 +54,7 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },

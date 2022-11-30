@@ -98,8 +98,8 @@ const Product = () => {
     >
       <Navbar />
       {/*FIXME: FIX DESCRIPTION ON LONG DESCRIPTION  */}
-      <Content style={{ ...Custom.contentStyle, padding: '3%' }}>
-        <Row align={'middle'} justify={'center'} gutter={[50, 50]}>
+      <Content style={Custom.contentStyle}>
+        <Row style={{minHeight:'calc(100vh - 100px)', padding:'30px 30px'}} align={'middle'} justify={'center'} gutter={[50, 50]}>
           {productStore.item ? (
             <ProductDisplay productStore={productStore} cat={cat}/>
           ) : (

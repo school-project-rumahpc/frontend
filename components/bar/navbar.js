@@ -12,16 +12,16 @@ TokenUtil.loadToken();
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [id, setId] = useState()
+  const [jwt, setJwt] = useState();
   const router = useRouter();
 
-  //this is probably useless!
-  useEffect(()=>{
+  //user login check
+  useEffect(() => {
     if (TokenUtil.accessToken) {
       const jwt = TokenUtil.decodedToken();
-      setId(jwt.sub)
-      }
-  },[TokenUtil.accessToken])
+      setJwt(jwt);
+    }
+  }, [TokenUtil.accessToken]);
   // console.log(id)
   //Drawer trigger
   const showDrawer = () => {
@@ -83,11 +83,13 @@ const Navbar = () => {
         </Col>
         <Col>
           <div className={styles.icon}>
-            <Link href={id ? `/cart/${id}` : '/catalog'}>
-              <a>
-                <Image src={'/cart.svg'} width={35} height={35} priority />
-              </a>
-            </Link>
+            {jwt && (
+              <Link href={'/cart/'}>
+                <a>
+                  <Image src={'/cart.svg'} width={35} height={35} priority />
+                </a>
+              </Link>
+            )}
           </div>
         </Col>
         <Col>
