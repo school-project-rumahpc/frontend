@@ -24,13 +24,11 @@ const Search = () => {
           setData(false);
           return;
         }
-        console.log(response);
         if (response.status === 404) {
           setData(404);
           return;
         }
       });
-    // console.log(router.query.s);
   }, [router.isReady, router.query.s]);
 
   if (data === false) {

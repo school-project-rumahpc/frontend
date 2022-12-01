@@ -22,7 +22,6 @@ const Navbar = () => {
       setJwt(jwt);
     }
   }, [TokenUtil.accessToken]);
-  // console.log(id)
   //Drawer trigger
   const showDrawer = () => {
     setOpen(true);

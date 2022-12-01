@@ -24,13 +24,11 @@ const Login = () => {
         TokenUtil.setAccessToken(body.access_token);
         TokenUtil.persistToken();
         const jwt = TokenUtil.decodedToken();
-        //console.log(jwt);
         message.success(`Login Succes, welcome ${jwt.username}`);
         setLoading(false);
         router.push('/catalog');
       })
       .catch(({ response }) => {
-        console.log(response.body.message);
         // error handling
         setMsg(response.body.message);
         setLoading(false);
@@ -88,11 +86,9 @@ const Register = () => {
     res
       .then((res) => {
         message.success(`Register Success, now please login`);
-        // console.log(res);
         setLoading(false);
       })
       .catch(({ response }) => {
-        // console.log(response)
         setMsg(response.body.message);
         setLoading(false);
         return;

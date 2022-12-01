@@ -11,7 +11,6 @@ import { Err, Loading } from '../loadingAndErr';
 const List = ({ item, cat }) => {
   const router = useRouter();
   const dataWrapper = useRef();
-  // console.log(cat);
   return (
     <div className={styles['data-wrapper']} ref={dataWrapper}>
       <Button
