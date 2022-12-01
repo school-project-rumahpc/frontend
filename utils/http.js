@@ -64,17 +64,18 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
   del: (url, opts) => {
     let req = superagent
       .del(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
@@ -84,7 +85,7 @@ export const http = {
       .use(AuthIntercept)
       .attach('file', file);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.sauth(TokenUtil.accessToken, { type: 'bearer' });
     }
 
     return req;

@@ -6,11 +6,27 @@ import { TokenUtil } from '../utils/token';
 export class createCartStore {
   ctx;
   userCart = null;
-  status = '';
+  status= '';
 
   constructor(ctx) {
     makeAutoObservable(this);
     this.ctx = ctx;
+  }
+  removeFromCart(id){
+    console.log(id)
+    TokenUtil.loadToken();
+    if (!TokenUtil.accessToken) return;
+    this.status = 'pending';
+    http
+      .del('/cart/remove', id)
+      .then(() => {
+        this.loadCart()
+        this.status = 'success';
+      })
+      .catch(({}) => {
+        this.status = 'errDone';
+        message.error(`Failed to remove`);
+      });
   }
   addToCart(id) {
     TokenUtil.loadToken();
@@ -19,12 +35,13 @@ export class createCartStore {
     http
       .post('/cart/add', id)
       .then(() => {
-        message.success('Item added to cart!');
+        this.loadCart()
+        message.success('Success',1)
         this.status = 'success';
       })
       .catch(() => {
-        this.status = 'error';
-        message.error('Sorry, failed to add');
+        this.status = 'errDone';
+        message.error(`insufficient stock`);
       });
   }
   loadCart() {

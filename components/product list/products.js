@@ -29,7 +29,6 @@ const List = ({ item, cat }) => {
             hoverable
             key={e.id}
             style={{
-              padding: '1px',
               backgroundColor: cat === 'Laptop' ? '#373737' : null,
               height: '350px',
               minWidth: '250px',
