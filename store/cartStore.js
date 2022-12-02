@@ -14,6 +14,7 @@ export class createCartStore {
   }
   checkout(){
     this.status = 'pending';
+    if(this.userCart.length === 0)return( message.warning('Cart is empty', 2),this.status = 'errDone')
     http.post('/order')
     .then(() => {
       this.loadCart();
