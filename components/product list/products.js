@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import { useStore } from '../../components/storeContext';
 import styles from '../../styles/product.module.css';
 import { Custom } from '../../utils/custom';
+import { formatPrice } from '../../utils/priceFormat';
 import { Err, Loading } from '../loadingAndErr';
 const List = ({ item, cat }) => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const List = ({ item, cat }) => {
         <LeftOutlined />
       </Button>
       {item.products.map((e) => {
+        const price = formatPrice(e.price)
         return (
           <Card
             className={styles['ant-card']}
@@ -48,9 +50,7 @@ const List = ({ item, cat }) => {
               className={styles['ant-card-meta']}
               title={
                 <h3 style={{ color: cat === 'Laptop' ? 'whitesmoke' : null }}>
-                  {`Rp.${e.price
-                    .toString()
-                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
+                  {price}
                 </h3>
               }
               description={

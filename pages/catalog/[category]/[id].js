@@ -7,6 +7,7 @@ import Navbar from '../../../components/bar/navbar';
 import { Err, Loading } from '../../../components/loadingAndErr';
 import { useStore } from '../../../components/storeContext';
 import { Custom } from '../../../utils/custom';
+import { formatPrice } from '../../../utils/priceFormat';
 import { TokenUtil } from '../../../utils/token';
 const { Title } = Typography;
 const { Content } = Layout;
@@ -58,7 +59,7 @@ const ProductDisplay = observer(({ productStore, cat, cartStore }) => {
                 onClick={() => cartStore.addToCart({ product_id: item.id })}
                 size='middle'
                 type='primary'
-                disabled={!TokenUtil.accessToken && true}
+                disabled={!TokenUtil.accessToken || item.stock === 0?true:false}
               >
                 {TokenUtil.accessToken ? 'Add to cart' : 'Please login!'}
               </Button>
@@ -71,9 +72,7 @@ const ProductDisplay = observer(({ productStore, cat, cartStore }) => {
           {item.name.toLowerCase()}
         </Title>
         <p style={{ color: 'black' }}>
-          {`Rp.${item.price
-            .toString()
-            .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
+          {formatPrice(item.price)}
           <br />
           Stock: {item.stock}
         </p>

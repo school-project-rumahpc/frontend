@@ -8,6 +8,7 @@ import styles from '../styles/product.module.css';
 import Image from 'next/image';
 import { Custom } from '../utils/custom';
 import { useState } from 'react';
+import { formatPrice } from '../utils/priceFormat';
 const { Content } = Layout;
 
 const Search = () => {
@@ -46,6 +47,7 @@ const Search = () => {
           ) : data ? (
             <Row justify={'center'} align='middle' gutter={[25, 25]}>
               {data.map((item) => {
+                const price = formatPrice(item.price)
                 return (
                   <Col key={item.id}>
                     <Card
@@ -87,9 +89,7 @@ const Search = () => {
                                   : null,
                             }}
                           >
-                            {`Rp.${item.price
-                              .toString()
-                              .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
+                            {price}
                           </h3>
                         }
                         description={

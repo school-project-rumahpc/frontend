@@ -8,34 +8,10 @@ import styles from '../../styles/product.module.css';
 import { useEffect } from 'react';
 import { Err, Loading } from '../../components/loadingAndErr';
 import { useStore } from '../../components/storeContext';
+import FloatButton from '../../components/floats';
+import { formatPrice } from '../../utils/priceFormat';
 const { Header, Content } = Layout;
 export const greenLine = { borderColor: '#009867' };
-
-const FloatButton = () => {
-  return (
-    <Link href={'/checkout'}>
-      <a>
-        <div
-          className={styles.cart}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '45px',
-            height: '45px',
-            backgroundColor: 'white',
-            padding: '6px',
-            borderRadius: '50%',
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-          }}
-        >
-          <ShoppingOutlined style={{ fontSize: '22px',marginTop:'2px' }} />
-        </div>
-      </a>
-    </Link>
-  );
-};
 
 const OrderDisplay = ({ cartStore }) => {
   const { userCart } = cartStore;
@@ -56,33 +32,26 @@ const OrderDisplay = ({ cartStore }) => {
       </Row>
       {userCart.map((e) => {
         const { item } = e;
+        const price = formatPrice(e.subTotal);
         return (
-          <>
             <Row
+              key={e.id}
               justify='space-between'
               gutter={[20]}
               style={{ textAlign: 'center' }}
-              key={e.id}
             >
               <Col style={{ width: '200px' }}> {item.name}</Col>
               <Col style={{ width: '80px' }}> {e.quantity}</Col>
-              <Col style={{ width: '200px' }}>
-                {`Rp.${e.subTotal
-                  .toString()
-                  .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
-              </Col>
+              <Col style={{ width: '200px' }}>{price}</Col>
+            <Divider key={e.id + '-divider'} />
             </Row>
-            <Divider />
-          </>
         );
       })}
       <Row align='middle' style={{ paddingBottom: '30px' }}>
         <Divider style={greenLine} orientation='left'>
           <h3>Total</h3>
         </Divider>
-        <h1>
-          {`Rp.${total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
-        </h1>
+        <h1>{formatPrice(total)}</h1>
         <Button
           block
           type='primary'
@@ -100,11 +69,11 @@ const OrderDisplay = ({ cartStore }) => {
 const CartDisplay = ({ cartStore }) => {
   const { userCart } = cartStore;
   return userCart.map((cartItem) => {
-    const { item, id, subTotal } = cartItem;
+    const { item,subTotal } = cartItem;
     return (
       <Row
+        key={cartItem.id}
         align='middle'
-        key={id}
         style={{
           padding: '0 25px',
           borderBottom: '2px solid grey',
@@ -130,18 +99,12 @@ const CartDisplay = ({ cartStore }) => {
         </Col>
         <Col>
           <Row>
-            <h1 style={{ color: 'black' }}>
-              {`Rp.${item.price
-                .toString()
-                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
-            </h1>
+            <h1 style={{ color: 'black' }}>{formatPrice(item.price)}</h1>
           </Row>
           <Row>
             <p style={{ color: 'black' }}>
               Subtotal :&nbsp;
-              {`Rp.${subTotal
-                .toString()
-                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}`}
+              {formatPrice(subTotal)}
             </p>
           </Row>
           <Row>
@@ -252,7 +215,7 @@ const Cart = () => {
           )}
         </Col>
       </Row>
-      <FloatButton />
+      <FloatButton href={'/checkout'} Icon={ShoppingOutlined} />
     </>
   );
 };
