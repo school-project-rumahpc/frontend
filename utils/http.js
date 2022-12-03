@@ -3,6 +3,7 @@ import superagentIntercept from 'superagent-intercept';
 import { appConfig } from '../config/appConfig';
 import { attachSuperagentLogger } from './http_logger';
 import { TokenUtil } from './token';
+TokenUtil.loadToken()
 let AuthIntercept = superagentIntercept((err, res) => {
   if (res && res.status === 401) {
     TokenUtil.clearAccessToken();

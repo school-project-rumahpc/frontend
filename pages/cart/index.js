@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Err, Loading } from '../../components/loadingAndErr';
 import { useStore } from '../../components/storeContext';
 const { Header, Content } = Layout;
+export const greenLine = { borderColor: '#009867' };
 
 const FloatButton = () => {
   return (
@@ -40,11 +41,10 @@ const OrderDisplay = ({ cartStore }) => {
   const { userCart } = cartStore;
   let total = 0;
   userCart.map(({ subTotal }) => (total += subTotal));
-  const greenBorder = { borderColor: '#009867' };
   return (
     <>
       <Row align='middle'>
-        <Divider orientation='left' style={greenBorder}>
+        <Divider orientation='left' style={greenLine}>
           <h1>Payment Details</h1>
         </Divider>
       </Row>
@@ -77,7 +77,7 @@ const OrderDisplay = ({ cartStore }) => {
         );
       })}
       <Row align='middle' style={{ paddingBottom: '30px' }}>
-        <Divider style={greenBorder} orientation='left'>
+        <Divider style={greenLine} orientation='left'>
           <h3>Total</h3>
         </Divider>
         <h1>
