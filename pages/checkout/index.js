@@ -8,29 +8,22 @@ import { useRouter } from 'next/router';
 import FloatButton from '../../components/floats';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { formatPrice } from '../../utils/priceFormat';
+import { statusColor } from '../../utils/custom';
 const { Content, Header } = Layout;
 
-const statusColor = (status) => {
-  switch (status) {
-    case 'Waiting':
-      return '#221E1F';
-    case 'Pending':
-      return '#C3963F';
-    default:
-      return '#009867';
-  }
-};
 
 //TODO: Itemlist details
 const ItemDisplay = ({ items }) => {
   return items.map(({ item, quantity, subTotal, id }) => {
     const price = formatPrice(subTotal);
     return (
-      <li key={id} style={{ listStyle: 'initial' }}>
+      <li key={id} style={{padding:'0',listStyle: 'disc' }}>
         <Row justify={'space-between'} key={id}>
           <Col span={12}>{item.name}</Col>
-          <Col span={6}>{price}</Col>
-          <Col span={3} style={{textAlign:'end'}}>QTY : {quantity}</Col>
+          <Col span={9}>{price}</Col>
+          <Col style={{width:'49px', textAlign: 'start' }}>
+            QTY : {quantity}
+          </Col>
         </Row>
       </li>
     );
@@ -39,50 +32,58 @@ const ItemDisplay = ({ items }) => {
 
 const CheckoutDisplay = ({ userCheckout }) => {
   const router = useRouter();
-  let num = 0;
   return (
     <Content style={{ padding: '0 20px' }}>
-      {userCheckout.map((checkout) => {
-        const { status, id, deadline, orderDate, items } = checkout;
-        const color = statusColor(status);
-        num++;
-        return (
-          <section key={id}>
-            <Row align='middle'>
-              <h2>
-                {num}. Order status : <b style={{ color: color }}>{status}</b>
-              </h2>
-            </Row>
-            <Row>{deadline && <h3 style={{color:'#FF2F2F'}}> Deadline :{deadline.slice(0, 10)}</h3>}</Row>
-            <Row>
-              <h4> Order date :{orderDate.slice(0, 10)}</h4>
-            </Row>
-            <ol>
-              <ItemDisplay items={items} />
-            </ol>
-            <Row style={{marginBottom:'15px'}} justify={'end'}>
-              <h2>
-                Total :&nbsp;
-                {formatPrice(
-                  items
-                    .map(({ subTotal }) => subTotal)
-                    .reduce((prev, curr) => prev + curr, 0)
+      <ol style={{ padding: '0 20px' }}>
+        {userCheckout.map((checkout) => {
+          const { status, id, deadline, orderDate, items } = checkout;
+          const color = statusColor(status);
+          return (
+            <section key={id}>
+              <Row align='middle'>
+                <li style={{listStyle:'auto'}}>
+                  <h2>
+                    Order status : <b style={{ color: color }}>{status}</b>
+                  </h2>
+                </li>
+              </Row>
+              <Row>
+                {deadline && (
+                  <h3 style={{ color: '#FF2F2F' }}>
+                    Deadline :{deadline.slice(0, 10)}
+                  </h3>
                 )}
-              </h2>
-            </Row>
-            <Row>
-              <Button
-                block
-                type='primary'
-                onClick={(e) => router.push(`/checkout/${id}`)}
-              >
-                Check Details
-              </Button>
-            </Row>
-            <Divider />
-          </section>
-        );
-      })}
+              </Row>
+              <Row>
+                <h4> Order date :{orderDate.slice(0, 10)}</h4>
+              </Row>
+              <ol>
+                <ItemDisplay items={items} />
+              </ol>
+              <Row style={{ marginBottom: '15px' }} justify={'end'}>
+                <h2>
+                  Total :&nbsp;
+                  {formatPrice(
+                    items
+                      .map(({ subTotal }) => subTotal)
+                      .reduce((prev, curr) => prev + curr, 0)
+                  )}
+                </h2>
+              </Row>
+              <Row>
+                <Button
+                  block
+                  type='primary'
+                  onClick={(e) => router.push(`/checkout/${id}`)}
+                >
+                  Check Details
+                </Button>
+              </Row>
+              <Divider />
+            </section>
+          );
+        })}
+      </ol>
     </Content>
   );
 };

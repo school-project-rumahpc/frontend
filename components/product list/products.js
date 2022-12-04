@@ -22,9 +22,10 @@ const List = ({ item, cat }) => {
         <LeftOutlined />
       </Button>
       {item.products.map((e) => {
-        const price = formatPrice(e.price)
+        const price = formatPrice(e.price);
         return (
           <Card
+            bordered={false}
             className={styles['ant-card']}
             onClick={() => router.push(`/catalog/${cat}/${e.id}`)}
             hoverable

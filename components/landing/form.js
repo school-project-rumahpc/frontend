@@ -76,7 +76,7 @@ const Login = () => {
   );
 };
 
-const Register = () => {
+const Register = ({ getKeyAfterReg }) => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
 
@@ -86,6 +86,7 @@ const Register = () => {
     res
       .then((res) => {
         message.success(`Register Success, now please login`);
+        getKeyAfterReg('1');
         setLoading(false);
       })
       .catch(({ response }) => {
@@ -144,7 +145,7 @@ const Register = () => {
             warningOnly: true,
           },
           { min: 10 },
-          { max: 14 },
+          { max: 13 },
         ]}
       >
         <Input placeholder='08xxx-xxxx-xxxx' />
@@ -173,15 +174,29 @@ const Register = () => {
 };
 
 const FormPage = () => {
+  const [activeTab, setActive] = useState('1');
+  const getKeyAfterReg = (key) => {
+    console.log(key);
+    setActive(key);
+  };
   return (
     <div className={styles['form-container']}>
       <Tabs
+        activeKey={activeTab}
+        onTabClick={(e) => setActive(e)}
         centered
         size='large'
-        defaultActiveKey='1'
         items={[
-          { label: 'Login', key: '1', children: <Login /> },
-          { label: 'Register', key: '2', children: <Register /> },
+          {
+            label: 'Login',
+            key: '1',
+            children: <Login />,
+          },
+          {
+            label: 'Register',
+            key: '2',
+            children: <Register getKeyAfterReg={getKeyAfterReg} />,
+          },
         ]}
       />
     </div>

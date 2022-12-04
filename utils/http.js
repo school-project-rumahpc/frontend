@@ -31,7 +31,7 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.set('Authorization', 'Bearer' + TokenUtil.accessToken);
     }
 
     const resp = await req;
