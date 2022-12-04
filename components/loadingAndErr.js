@@ -1,22 +1,18 @@
 import { Button, Empty, Spin } from 'antd';
-import { observer } from 'mobx-react-lite';
-import { useStore } from './storeContext';
+import { useRouter } from 'next/router';
 
 const Loading = () => {
   return (
     <Spin
       style={{
-        minHeight:'100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding:'25px'
       }}
       size='large'
     />
   );
 };
-const Err = ({id}) => {
-  const {productStore} = useStore();
+const Err = () => {
+  const {reload} = useRouter()
   return (
     <div
       style={{
@@ -26,11 +22,11 @@ const Err = ({id}) => {
         justifyContent: 'center',
       }}
     >
-      <Empty description={'Something went wrong!'}>
+      <Empty description={<p style={{color:'grey'}}>Something went wrong!</p>}>
         <Button
           type='link'
           style={{ color: 'blue' }}
-          onClick={() => {productStore.loadData();productStore.loadItem(id)}}
+          onClick={() => {reload()}}
         >
           Reload
         </Button>
@@ -38,6 +34,5 @@ const Err = ({id}) => {
     </div>
   );
 }
-observer(Err)
 export { Err, Loading };
 

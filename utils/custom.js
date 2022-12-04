@@ -19,3 +19,13 @@ export const Custom = {
     backgroundSize: "70px",
   }
 };
+export const statusColor = (status) => {
+  switch (status) {
+    case 'Waiting':
+      return '#221E1F';
+    case 'Pending':
+      return '#C3963F';
+    default:
+      return '#009867';
+  }
+};

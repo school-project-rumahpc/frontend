@@ -3,6 +3,7 @@ import superagentIntercept from 'superagent-intercept';
 import { appConfig } from '../config/appConfig';
 import { attachSuperagentLogger } from './http_logger';
 import { TokenUtil } from './token';
+TokenUtil.loadToken()
 let AuthIntercept = superagentIntercept((err, res) => {
   if (res && res.status === 401) {
     TokenUtil.clearAccessToken();
@@ -13,10 +14,15 @@ let AuthIntercept = superagentIntercept((err, res) => {
 
 export const http = {
   auth: (url, values) => {
+    const req = superagent.post(url).send(values).use(attachSuperagentLogger);
+    return req;
+  },
+  search: (query) => {
     const req = superagent
-    .post(url)
-    .send(values)
-    .use(attachSuperagentLogger)
+      .get(`${appConfig.apiUrl}/product`)
+      .query({ product_name: query })
+      .use(attachSuperagentLogger);
+
     return req;
   },
   fetcher: async () => {
@@ -25,30 +31,31 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.set('Authorization', 'Bearer' + TokenUtil.accessToken);
     }
 
     const resp = await req;
-    
+
     return resp.body;
   },
   get: (url) => {
     let req = superagent
-      .get(appConfig.apiUrl+url)
+      .get(appConfig.apiUrl + url)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
   post: (url, opts) => {
     let req = superagent
       .post(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
@@ -58,17 +65,18 @@ export const http = {
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
   del: (url, opts) => {
     let req = superagent
       .del(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
     return req;
   },
@@ -78,7 +86,7 @@ export const http = {
       .use(AuthIntercept)
       .attach('file', file);
     if (TokenUtil.accessToken) {
-      req = req.set('Authorization', 'Bearer ' + TokenUtil.accessToken);
+      req = req.sauth(TokenUtil.accessToken, { type: 'bearer' });
     }
 
     return req;

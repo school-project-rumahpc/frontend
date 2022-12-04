@@ -16,14 +16,15 @@
   height: 400px;
   background-color: #009867;
 }
-/* FIXME: BUG ON LAPTOP CATEGORY, CHOICE IS TO EITHER LEAVE IT WITH WHITE BACKGROUND OR ? */
-.container:nth-child(even) .ant-card {
-  background-color: #373737;
-}
-.container:nth-child(even) .ant-card-meta > div > div:not(:last-child){
-  color: ghostwhite;
-}
 .container:nth-child(even) .ant-card-meta > div > div:last-child{
     color: rgba(255, 255, 255, 0.65);
-
+}
+.cart{
+  border: 2px solid #009867;
+  transition: all 150ms ease-in-out;
+}
+.cart:hover{
+  cursor: pointer;
+  transform: translateY(-3px);
+  box-shadow: grey 0 5px 10px;
 }

@@ -1,15 +1,27 @@
 import { Col, Input, Row, Layout } from 'antd';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../../styles/header.module.css';
 import UserDrawer from '../user';
+import { TokenUtil } from '../../utils/token';
 const { Header } = Layout;
+
+TokenUtil.loadToken();
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const router = useRouter() 
+  const [jwt, setJwt] = useState();
+  const router = useRouter();
+
+  //user login check
+  useEffect(() => {
+    if (TokenUtil.accessToken) {
+      const jwt = TokenUtil.decodedToken();
+      setJwt(jwt);
+    }
+  }, [TokenUtil.accessToken]);
   //Drawer trigger
   const showDrawer = () => {
     setOpen(true);
@@ -18,10 +30,10 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  //TODO: search handler
   const onSearch = (value) => {
-     console.log(value)
-    //router.push('/catalog')
+    if (value) {
+      router.push(`/search?s=${value}`);
+    }
   };
 
   return (
@@ -70,11 +82,13 @@ const Navbar = () => {
         </Col>
         <Col>
           <div className={styles.icon}>
-            <Link href={'/catalog'}>
-              <a>
-                <Image src={'/cart.svg'} width={35} height={35} priority />
-              </a>
-            </Link>
+            {jwt && (
+              <Link href={'/cart/'}>
+                <a>
+                  <Image src={'/cart.svg'} width={35} height={35} priority />
+                </a>
+              </Link>
+            )}
           </div>
         </Col>
         <Col>

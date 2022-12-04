@@ -12,7 +12,6 @@ const Sidebar = () => {
   return (
     <Menu
       defaultSelectedKeys={'1'}
-      onChange={(e) => console.log(e)}
       items={[
         {
           key: '1',

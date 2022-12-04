@@ -7,7 +7,7 @@ import { Custom } from '../../utils/custom';
 import { http } from '../../utils/http';
 import { TokenUtil } from '../../utils/token';
 //err submit handler
-const onFinishFailed = (errorInfo) => {
+const onFinishFailed = () => {
   console.log('Submit failed');
 };
 
@@ -24,13 +24,11 @@ const Login = () => {
         TokenUtil.setAccessToken(body.access_token);
         TokenUtil.persistToken();
         const jwt = TokenUtil.decodedToken();
-        console.log(jwt);
         message.success(`Login Succes, welcome ${jwt.username}`);
         setLoading(false);
         router.push('/catalog');
       })
       .catch(({ response }) => {
-        console.log(response.body.message);
         // error handling
         setMsg(response.body.message);
         setLoading(false);
@@ -78,7 +76,7 @@ const Login = () => {
   );
 };
 
-const Register = () => {
+const Register = ({ getKeyAfterReg }) => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
 
@@ -88,11 +86,10 @@ const Register = () => {
     res
       .then((res) => {
         message.success(`Register Success, now please login`);
-        console.log(res);
+        getKeyAfterReg('1');
         setLoading(false);
       })
       .catch(({ response }) => {
-        // console.log(response)
         setMsg(response.body.message);
         setLoading(false);
         return;
@@ -148,7 +145,7 @@ const Register = () => {
             warningOnly: true,
           },
           { min: 10 },
-          { max: 14 },
+          { max: 13 },
         ]}
       >
         <Input placeholder='08xxx-xxxx-xxxx' />
@@ -177,15 +174,29 @@ const Register = () => {
 };
 
 const FormPage = () => {
+  const [activeTab, setActive] = useState('1');
+  const getKeyAfterReg = (key) => {
+    console.log(key);
+    setActive(key);
+  };
   return (
     <div className={styles['form-container']}>
       <Tabs
+        activeKey={activeTab}
+        onTabClick={(e) => setActive(e)}
         centered
         size='large'
-        defaultActiveKey='1'
         items={[
-          { label: 'Login', key: '1', children: <Login /> },
-          { label: 'Register', key: '2', children: <Register /> },
+          {
+            label: 'Login',
+            key: '1',
+            children: <Login />,
+          },
+          {
+            label: 'Register',
+            key: '2',
+            children: <Register getKeyAfterReg={getKeyAfterReg} />,
+          },
         ]}
       />
     </div>

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const Custom404 = () => {
@@ -7,7 +6,7 @@ const Custom404 = () => {
     <div
       style={{
         display: 'flex',
-        paddingTop: '30vh',
+        paddingTop: '10vh',
         alignItems: 'center',
         flexDirection: 'column',
         height: '100vh',
