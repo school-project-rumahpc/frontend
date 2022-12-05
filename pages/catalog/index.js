@@ -44,9 +44,9 @@ const Catalog = () => {
               <HeartFilled color='crimson' />
             </i>{' '}
             by&nbsp;
-            <a target={'_blank'} href='https://github.com/LmaoDarwin'>Darwin </a>
+            <a target={'_blank'} href='https://instagram.com/darwin.id'>Darwin </a>
             &&nbsp;
-            <a target={'_blank'} href='https://github.com/arilramadani24'>Aril</a>
+            <a target={'_blank'} href='https://instagram.com/arilramadani24'>Aril</a>
           </h5>
         </Footer>
       </Layout>

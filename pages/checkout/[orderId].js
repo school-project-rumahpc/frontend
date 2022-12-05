@@ -2,7 +2,7 @@ import { Col, Divider, Row, Statistic } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { Loading } from '../../components/loadingAndErr';
+import { Err, Loading } from '../../components/loadingAndErr';
 import { useStore } from '../../components/storeContext';
 import { statusColor } from '../../utils/custom';
 import { formatPrice } from '../../utils/priceFormat';
@@ -77,6 +77,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
 
 const OrderDetails = () => {
   const { checkoutDetails, status } = useCheckOutDetails();
+  if(status === 'error')return <Err/>
   return (
     <Row
       justify={'center'}
