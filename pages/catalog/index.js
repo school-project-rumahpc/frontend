@@ -39,11 +39,7 @@ const Catalog = () => {
         </Content>
         <Footer>
           <h5 style={{ color: 'GrayText' }}>
-            Made with{' '}
-            <i style={{ color: 'crimson' }}>
-              <HeartFilled color='crimson' />
-            </i>{' '}
-            by&nbsp;
+            Made by
             <a target={'_blank'} href='https://instagram.com/darwin.id'>Darwin </a>
             &&nbsp;
             <a target={'_blank'} href='https://instagram.com/arilramadani24'>Aril</a>
