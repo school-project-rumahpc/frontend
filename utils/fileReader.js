@@ -1,18 +1,12 @@
-const reader = new FileReader();
-
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
 
-const getUint8Array = (file) =>
-  new Promise((resolve, reject) => {
-    let int8View;
-    reader.readAsArrayBuffer(file);
-    reader.onload = () => resolve(new Uint8Array(reader.result));
-    reader.onerror = () => reject(error);
-  });
-
-export { getBase64, getUint8Array };
+const toBase64 = (file) => {
+  return Buffer.from(file).toString('base64');
+};
+export { getBase64, toBase64 };
