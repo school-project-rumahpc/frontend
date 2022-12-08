@@ -39,7 +39,7 @@ const Catalog = () => {
         </Content>
         <Footer>
           <h5 style={{ color: 'GrayText' }}>
-            Made by
+            Made by &nbsp;
             <a target={'_blank'} href='https://instagram.com/darwin.id'>Darwin </a>
             &&nbsp;
             <a target={'_blank'} href='https://instagram.com/arilramadani24'>Aril</a>
