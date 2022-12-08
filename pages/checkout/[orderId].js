@@ -8,44 +8,45 @@ import {
   Statistic,
   Upload,
   Image,
-} from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { Err, Loading } from '../../components/loadingAndErr';
-import { useStore } from '../../components/storeContext';
-import { statusColor } from '../../utils/custom';
-import { formatPrice } from '../../utils/priceFormat';
-import { http } from '../../utils/http';
-import { getBase64, toBase64 } from '../../utils/fileReader';
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Err, Loading } from "../../components/loadingAndErr";
+import { useStore } from "../../components/storeContext";
+import { statusColor } from "../../utils/custom";
+import { formatPrice } from "../../utils/priceFormat";
+import { http } from "../../utils/http";
+import { getBase64, toBase64 } from "../../utils/fileReader";
 
 // proof of payment
 const POP = ({ checkoutDetails }) => {
-  const {id} = checkoutDetails 
+  const { id } = checkoutDetails;
   const { checkoutStore } = useStore();
   const [uploading, setUploading] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const [image, setImage] = useState(null);
 
   const handleSubmit = () => {
     const formData = new FormData();
-    formData.append('order_id', id);
-    formData.append('file', image);
+    formData.append("order_id", id);
+    formData.append("file", image);
     setUploading(true);
     http
-      .post('/order/upload', formData)
+      .post("/order/upload", formData)
       .then(({ body }) => {
         message.success(body.message);
       })
       .catch(({ response }) => {
-        console.log(response);
-        message.error();
+        message.error(response.body);
       })
-      .finally(() => checkoutStore.loadCheckoutDetails(id));
-    setUploading(false);
+      .finally(() => {
+        checkoutStore.loadCheckoutDetails(id);
+        setUploading(false);
+      });
   };
 
   const handlePreUpload = (file) => {
@@ -62,33 +63,32 @@ const POP = ({ checkoutDetails }) => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
 
   return (
     <>
-      <Row justify={'center'}>
+      <Row justify={"center"}>
         <Upload
-          style={{ width: 'fitContent', padding: '0' }}
+          style={{ width: "fitContent", padding: "0" }}
           onRemove={() => setImage(null)}
-          accept='image/*'
+          accept="image/*"
           beforeUpload={handlePreUpload}
-          listType='picture'
+          listType="picture"
           onPreview={handlePreview}
         >
-          {!image ? (
-            <Button icon={<UploadOutlined />} type='text'>
+          {!image &&
+            <Button icon={<UploadOutlined />} type="text">
               Upload
-            </Button>
-          ) : null}
+            </Button>}
         </Upload>
       </Row>
-      <Row justify={'center'} style={{ margin: '20px 0' }}>
+      <Row justify={"center"} style={{ margin: "20px 0" }}>
         <Button
           disabled={!image}
           loading={uploading}
-          type='primary'
+          type="primary"
           onClick={handleSubmit}
           block
         >
@@ -101,7 +101,7 @@ const POP = ({ checkoutDetails }) => {
         footer={null}
         onCancel={handleCancel}
       >
-        <img alt='photo' style={{ width: '100%' }} src={previewImage} />
+        <img alt="photo" style={{ width: "100%" }} src={previewImage} />
       </Modal>
     </>
   );
@@ -112,8 +112,8 @@ const ItemsDisplay = ({ items }) => {
     return (
       <Row
         key={id}
-        style={{ width: '600px', textAlign: 'end' }}
-        justify='space-between'
+        style={{ width: "600px", textAlign: "end" }}
+        justify="space-between"
       >
         <Col span={15}>
           <h3>{item.name}</h3>
@@ -134,12 +134,12 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
   return (
     <>
       {deadline && (
-        <Row justify={'center'}>
-          <h3 style={{ color: '#FF2F2F' }}>{deadline}</h3>
+        <Row justify={"center"}>
+          <h3 style={{ color: "#FF2F2F" }}>{deadline}</h3>
           <Divider />
         </Row>
       )}
-      <Row justify={'space-between'}>
+      <Row justify={"space-between"}>
         <Col>
           <h2>Status :</h2>
         </Col>
@@ -148,7 +148,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         </Col>
         <Divider />
       </Row>
-      <Row align={'middle'} justify='space-between'>
+      <Row align={"middle"} justify="space-between">
         <Col>
           <h2>Items</h2>
         </Col>
@@ -157,7 +157,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         </Col>
         <Divider />
       </Row>
-      <Row justify={'space-between'}>
+      <Row justify={"space-between"}>
         <Col>
           <h2>Total</h2>
           <sup>please pay the exact amount displayed**</sup>
@@ -171,11 +171,11 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         <h2>Proof Of Payment</h2>
       </Row>
       {payment ? (
-        <Row justify={'center'} style={{ margin: '20px 0 40px' }}>
+        <Row justify={"center"} style={{ margin: "20px 0 40px" }}>
           <Image
             style={{
-              border: '2px solid #009867',
-              borderRadius: '20px',
+              border: "2px solid #009867",
+              borderRadius: "20px",
             }}
             src={`data:image/*;base64,${toBase64(payment.file.data)}`}
             width={400}
@@ -190,33 +190,33 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
 
 const OrderDetails = () => {
   const { checkoutDetails, status } = useCheckOutDetails();
-  if (status === 'error') return <Err />;
+  if (status === "error") return <Err />;
   return (
     <Row
-      justify={'center'}
+      justify={"center"}
       style={{
-        backgroundColor: '#009867',
-        minHeight: '100vh',
-        maxHeight: '100%',
+        backgroundColor: "#009867",
+        minHeight: "100vh",
+        maxHeight: "100%",
       }}
     >
       <Col
         style={{
-          color: 'grey',
-          padding: '0 30px',
-          boxShadow: '0 0 100px rgba(0, 0, 0, 0.25)',
-          borderRadius: '25px',
-          margin: '40px 0',
-          backgroundColor: '#fff',
-          width: '60vw',
+          color: "grey",
+          padding: "0 30px",
+          boxShadow: "0 0 100px rgba(0, 0, 0, 0.25)",
+          borderRadius: "25px",
+          margin: "40px 0",
+          backgroundColor: "#fff",
+          width: "60vw",
         }}
       >
-        <Row align={'middle'}>
-          <Divider orientation='left' style={{ borderColor: '#009867' }}>
+        <Row align={"middle"}>
+          <Divider orientation="left" style={{ borderColor: "#009867" }}>
             <h1>Order Details</h1>
           </Divider>
         </Row>
-        {status === 'successDetails' ? (
+        {status === "successDetails" ? (
           <OrderDetailsDisplay checkoutDetails={checkoutDetails} />
         ) : (
           <Loading />
