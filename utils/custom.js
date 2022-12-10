@@ -26,6 +26,8 @@ export const statusColor = (status) => {
       return '#221E1F';
     case 'Pending':
       return '#C3963F';
+    case 'Fail':
+      return '#FF2F2F';
     default:
       return '#009867';
   }

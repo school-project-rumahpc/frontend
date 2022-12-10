@@ -3,6 +3,7 @@ import { http } from '../utils/http';
 
 export class createAdminPrivillege {
   ctx;
+  filteredOrders;
   allOrders;
   status;
 
@@ -18,8 +19,18 @@ export class createAdminPrivillege {
       .query({ deleted: query })
       .then(({ body }) => {
         this.allOrders = body;
+        this.filteredOrders = this.allOrders;
         this.status = 'success';
       })
       .catch(({ response }) => console.log(response));
+  }
+  filterOrders(status) {
+    this.filteredOrders = this.allOrders;
+    if (status === 'All') return;
+    this.filteredOrders = this.filteredOrders.filter((order) => order.status == status);
+    console.log({
+      all: this.allOrders,
+      filter: this.filteredOrders,
+    });
   }
 }
