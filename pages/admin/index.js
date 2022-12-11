@@ -7,6 +7,8 @@ import {
   message,
   Segmented,
   Divider,
+  Statistic,
+  notification,
 } from 'antd';
 import { Custom, statusColor } from '../../utils/custom';
 import { TokenUtil } from '../../utils/token';
@@ -28,32 +30,34 @@ const Unauthorized = () => {
     </Row>
   );
 };
-//TODO: Try with antd table
-const OrdersDisplay = ({ filteredOrders }) => {
+
+const OrdersDisplay = ({ adminPrivillege }) => {
+  const { filteredOrders } = adminPrivillege;
   return filteredOrders.map(({ deadline, id, status, totalPrice, user }) => {
-    console.log(new Date(deadline?.replace(' ', 'T')).getTime())
     return (
-      <Row
-        align={'middle'}
-        justify={'end'}
-        style={{ padding: '0 30px' }}
-        key={id}
-      >
-        <Divider orientation='right'>
-          <h1>User - {user.username}</h1>
-        </Divider>
-        <Col style={{ textAlign: 'end' }}>
-          {deadline && <h3 style={{ color: 'red' }}>{deadline}</h3>}
-          <h2 style={{ color: statusColor(status) }}>{status}</h2>
-          <h4>{user.email}</h4>
-          <h4>{user.phone}</h4>
-        </Col>
-      </Row>
+      <li key={id} style={{ listStyle: 'auto' }}>
+        <Row align={'middle'} justify={'end'} style={{ padding: '0 30px' }}>
+          <Col style={{ textAlign: 'end' }}>
+            <h1>User - {user.username}</h1>
+            <h4>{user.email}</h4>
+            <h4>{user.phone}</h4>
+            {deadline && (
+              <Statistic.Countdown
+                title={<h3 style={{ color: 'red' }}>Deadline</h3>}
+                value={new Date(deadline?.replace(' ', 'T')).getTime()}
+                valueStyle={{ color: 'red' }}
+              />
+            )}
+            <h2 style={{ color: statusColor(status) }}>{status}</h2>
+          </Col>
+          <Divider />
+        </Row>
+      </li>
     );
   });
 };
 
-const ContentDisplay = observer(({ adminPrivillege }) => {
+const ContentDisplay = ({ adminPrivillege, user }) => {
   const [status, setStatus] = useState('All');
   const Alltatus = [
     'All',
@@ -74,7 +78,6 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       value: status,
     };
   });
-  if (adminPrivillege.status === 'pending') return <Loading />;
   return (
     <>
       <Segmented
@@ -88,18 +91,49 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       <Row style={{ padding: '0 30px' }}>
         <h1 style={{ color: statusColor(status) }}>{status} Orders</h1>
       </Row>
-      <OrdersDisplay filteredOrders={adminPrivillege.filteredOrders} />
+      <ul>
+        <OrdersDisplay adminPrivillege={adminPrivillege} />
+      </ul>
+      {/*hidden Countdown */}
+      <section style={{ display: 'none'}}>
+        {adminPrivillege.allOrders.map(({ user, deadline, id }) => {
+          if(!deadline)return;
+          return (
+            <Statistic.Countdown
+              key={id}
+              // value={Date.now() + 3 * 1000}
+              value={new Date(deadline?.replace(' ', 'T')).getTime()}
+              onFinish={() => {
+                // adminPrivillege.loadAllOrders();
+                notification.warning({
+                  message: 'Warning!',
+                  description: (
+                    <h4>
+                      <b>Order from {user.username} </b>
+                      , With Order Id : <br />
+                      {id}
+                      <br /> has failed due to unpaid order
+                    </h4>
+                  ),
+                  duration: 0,
+                  placement: 'topLeft',
+                  style:{width:550}
+                });
+              }}
+            />
+          );
+        })}
+      </section>
     </>
   );
-});
+};
 
 const Admin = () => {
   const router = useRouter();
   const { user, status } = useUser();
   const adminPrivillege = useGet('false');
   if (status !== 'done') return <Spin />;
-  if (user.role !== 'admin') return <Unauthorized />;
-  if (!user) return;
+  if (!user || user.role !== 'admin') return <Unauthorized />;
 
   const logOut = () => {
     TokenUtil.clearAccessToken();
@@ -136,14 +170,18 @@ const Admin = () => {
           </Col>
         </Row>
       </Header>
-      <Content style={{...Custom.contentStyle, paddingBottom:'100px'}}>
-        <ContentDisplay adminPrivillege={adminPrivillege} />
+      <Content style={{ ...Custom.contentStyle, paddingBottom: '100px' }}>
+        {adminPrivillege.status === 'success' ? (
+          <ContentDisplay adminPrivillege={adminPrivillege} user={user} />
+        ) : (
+          <Loading />
+        )}
       </Content>
     </Layout>
   );
 };
 
-export default Admin;
+export default observer(Admin);
 
 const useUser = () => {
   const [status, setStatus] = useState('pending');
