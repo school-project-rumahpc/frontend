@@ -16,7 +16,7 @@ export class createAdminPrivillege {
     this.status = 'pending';
     http
       .get('/order')
-      .query({ deleted: query })
+      .query({ deleted: query.deleted , payment: query.payment})
       .then(({ body }) => {
         this.allOrders = body;
         this.filteredOrders = this.allOrders;
