@@ -53,9 +53,10 @@ export class createCartStore {
         message.success('succes',0.5)
         this.status = 'success';
       })
-      .catch(() => {
+      .catch(({response}) => {
+        console.log(response)
         this.status = 'errDone';
-        message.error(`insufficient stock`);
+        message.error(response.body?.message);
       });
   }
   loadCart() {
