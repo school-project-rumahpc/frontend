@@ -3,11 +3,11 @@ import {
   Col,
   Divider,
   message,
-  Modal,
   Row,
   Statistic,
   Upload,
   Image,
+  Spin,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
@@ -38,8 +38,8 @@ const POP = ({ checkoutDetails }) => {
       .then(({ body }) => {
         message.success(body.message);
       })
-      .catch(({ response }) => {
-        message.error(response.body);
+      .catch(() => {
+        message.error('File must be under 10 MB');
       })
       .finally(() => {
         checkoutStore.loadCheckoutDetails(id);
@@ -91,7 +91,7 @@ const POP = ({ checkoutDetails }) => {
       </Row>
       {preview && (
         <Row>
-          <Image src={`data:image/*;base64,${preview}`} preview={false} />
+          <Image placeholder={<Spin children='Loading preview...'/>} src={`data:image/*;base64,${preview}`} preview={false} />
         </Row>
       )}
       <Row justify={"center"} style={{ margin: "20px 0" }}>
@@ -177,7 +177,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         <Row justify={"center"} style={{ margin: "20px 0 40px" }}>
           <Image
             preview={false}
-            placeholder={<Loading />}
+            placeholder={<Spin />}
             style={{
               border: "2px solid #009867",
               borderRadius: "20px",

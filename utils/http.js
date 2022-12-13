@@ -59,9 +59,10 @@ export const http = {
     }
     return req;
   },
-  put: (url, opts) => {
+  patch: (url, opts) => {
     let req = superagent
-      .put(appConfig.apiUrl + url)
+      .patch(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {

@@ -32,33 +32,30 @@ const Unauthorized = () => {
     </Row>
   );
 };
-
-// const OrdersDisplay = ({ adminPrivillege }) => {
-//   const { filteredOrders } = adminPrivillege;
-//   return filteredOrders.map(({ deadline, id, status, totalPrice, user }) => {
-//     return (
-//       <li key={id} style={{ listStyle: 'auto' }}>
-//         <Row align={'middle'} justify={'end'} style={{ padding: '0 30px' }}>
-//           <Col style={{ textAlign: 'end' }}>
-//             <h1>User - {user.username}</h1>
-//             <h4>{user.email}</h4>
-//             <h4>{user.phone}</h4>
-//             {deadline && (
-//               <Statistic.Countdown
-//                 title={<h3 style={{ color: 'red' }}>Deadline</h3>}
-//                 value={new Date(deadline?.replace(' ', 'T')).getTime()}
-//                 valueStyle={{ color: 'red' }}
-//               />
-//             )}
-//             <h2 style={{ color: statusColor(status) }}>{status}</h2>
-//           </Col>
-//           <Divider />
-//         </Row>
-//       </li>
-//     );
-//   });
-// };
-
+const getAction = ({ status, action, id }) => {
+  switch (status) {
+    case 'Waiting':
+      return (
+        <Button block danger type='primary' size='small'>
+          Cancel
+        </Button>
+      );
+    case 'Pending':
+      return (
+        <Button
+          block
+          type='primary'
+          size='small'
+          loading={action.status === 'action'}
+          onClick={() => action.approveOrder(id)}
+        >
+          Approve
+        </Button>
+      );
+    default:
+      return;
+  }
+};
 const ContentDisplay = ({ adminPrivillege }) => {
   const [status, setStatus] = useState('All');
   const Alltatus = [
@@ -80,12 +77,15 @@ const ContentDisplay = ({ adminPrivillege }) => {
       value: status,
     };
   });
-  const columnsKey = Object.keys(adminPrivillege.allOrders[0]);
+  const columnsKey =
+    adminPrivillege.allOrders.length > 0
+      ? Object.keys(adminPrivillege.allOrders[0])
+      : [];
   const columnsKeyProp = columnsKey.map((e) => {
     return {
       key: e,
       dataIndex: e,
-      width: e == 'id' && 500,
+      width: e == 'id' ? 500 : e == 'totalPrice' && 150,
       title: e[0].toUpperCase() + e.substring(1),
       fixed: e == 'user' && 'right',
       align: e == 'deadline' && 'center',
@@ -110,7 +110,18 @@ const ContentDisplay = ({ adminPrivillege }) => {
       totalPrice: formatPrice(e.totalPrice),
       deadline: e.deadline,
       user: e.user.username,
-      action:e.deadline && <Button size='small'>Click me</Button>,
+      action: getAction({
+        status: e.status,
+        action: adminPrivillege,
+        id: e.id,
+      }),
+      image:
+        (e.image && (
+          <a target={'_blank'} href={e.image}>
+            Open image
+          </a>
+        )) ||
+        'no image',
     };
   });
 
@@ -132,7 +143,12 @@ const ContentDisplay = ({ adminPrivillege }) => {
           )}
           columns={[
             ...columnsKeyProp,
-            { key: 'action',dataIndex:'action', title: 'Action', fixed: 'right' },
+            {
+              key: 'action',
+              dataIndex: 'action',
+              title: 'Action',
+              fixed: 'right',
+            },
           ]}
           dataSource={data}
           scroll={{ x: 1700 }}
@@ -222,10 +238,10 @@ const Admin = () => {
         </Row>
       </Header>
       <Content style={{ ...Custom.contentStyle, paddingBottom: '60px' }}>
-        {adminPrivillege.status === 'success' ? (
-          <ContentDisplay adminPrivillege={adminPrivillege} />
-        ) : (
+        {adminPrivillege.status === 'pending' ? (
           <Loading />
+        ) : (
+          <ContentDisplay adminPrivillege={adminPrivillege} />
         )}
       </Content>
     </Layout>
