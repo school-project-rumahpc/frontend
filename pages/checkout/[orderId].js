@@ -18,22 +18,20 @@ import { useStore } from "../../components/storeContext";
 import { statusColor } from "../../utils/custom";
 import { formatPrice } from "../../utils/priceFormat";
 import { http } from "../../utils/http";
-import { getBase64, toBase64 } from "../../utils/fileReader";
+import { getBase64 } from "../../utils/fileReader";
 
 // proof of payment
 const POP = ({ checkoutDetails }) => {
   const { id } = checkoutDetails;
   const { checkoutStore } = useStore();
   const [uploading, setUploading] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append("order_id", id);
-    formData.append("file", image);
+    formData.append("image", image);
     setUploading(true);
     http
       .post("/order/upload", formData)
@@ -54,36 +52,48 @@ const POP = ({ checkoutDetails }) => {
     return false;
   };
 
-  const handleCancel = () => setPreviewOpen(false);
-
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
-  };
-
   return (
     <>
-      <Row justify={"center"}>
-        <Upload
-          style={{ width: "fitContent", padding: "0" }}
-          onRemove={() => setImage(null)}
-          accept="image/*"
-          beforeUpload={handlePreUpload}
-          listType="picture"
-          onPreview={handlePreview}
-        >
-          {!image &&
-            <Button icon={<UploadOutlined />} type="text">
-              Upload
-            </Button>}
-        </Upload>
+      <Row justify={"center"} style={{ width: "100%" }}>
+        <Col style={{ width: "100%" }}>
+          {image && (
+            <a
+              onClick={() =>
+                image
+                  .arrayBuffer()
+                  .then((res) =>
+                    setPreview(
+                      Buffer.from(new Uint8Array(res)).toString("base64")
+                    )
+                  )
+              }
+            >
+              Show preview
+            </a>
+          )}
+          <Upload
+            onRemove={() => {
+              setImage(null);
+              setPreview(null);
+            }}
+            accept="image/*"
+            beforeUpload={handlePreUpload}
+            listType="list"
+            onPreview={false}
+          >
+            {!image && (
+              <Button icon={<UploadOutlined />} type="text">
+                Upload
+              </Button>
+            )}
+          </Upload>
+        </Col>
       </Row>
+      {preview && (
+        <Row>
+          <Image src={`data:image/*;base64,${preview}`} preview={false} />
+        </Row>
+      )}
       <Row justify={"center"} style={{ margin: "20px 0" }}>
         <Button
           disabled={!image}
@@ -95,14 +105,6 @@ const POP = ({ checkoutDetails }) => {
           Submit
         </Button>
       </Row>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img alt="photo" style={{ width: "100%" }} src={previewImage} />
-      </Modal>
     </>
   );
 };
@@ -130,7 +132,8 @@ const ItemsDisplay = ({ items }) => {
 };
 
 const OrderDetailsDisplay = ({ checkoutDetails }) => {
-  const { deadline, status, items, totalPrice, payment } = checkoutDetails;
+  const { deadline, status, items, totalPrice, image } = checkoutDetails;
+  console.log(image);
   return (
     <>
       {deadline && (
@@ -170,15 +173,18 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
       <Row>
         <h2>Proof Of Payment</h2>
       </Row>
-      {payment ? (
+      {image ? (
         <Row justify={"center"} style={{ margin: "20px 0 40px" }}>
           <Image
+            preview={false}
+            placeholder={<Loading />}
             style={{
               border: "2px solid #009867",
               borderRadius: "20px",
             }}
-            src={`data:image/*;base64,${toBase64(payment.file.data)}`}
-            width={400}
+            src={image}
+            width={500}
+            height="100%"
           />
         </Row>
       ) : (
