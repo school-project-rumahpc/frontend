@@ -18,7 +18,6 @@ import { useStore } from "../../components/storeContext";
 import { statusColor } from "../../utils/custom";
 import { formatPrice } from "../../utils/priceFormat";
 import { http } from "../../utils/http";
-import { getBase64 } from "../../utils/fileReader";
 
 // proof of payment
 const POP = ({ checkoutDetails }) => {
