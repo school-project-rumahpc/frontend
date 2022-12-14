@@ -112,17 +112,18 @@ const ItemsDisplay = ({ items }) => {
   return items.map(({ id, quantity, item, subTotal }) => {
     return (
       <Row
+        style={{textAlign:'end'}}
         key={id}
-        style={{ width: "600px", textAlign: "end" }}
+        gutter={[30]}
         justify="space-between"
       >
-        <Col span={15}>
+        <Col flex={'auto'}>
           <h3>{item.name}</h3>
         </Col>
-        <Col span={3}>
+        <Col>
           <h3>{quantity}x</h3>
         </Col>
-        <Col span={6}>
+        <Col >
           <h4>{formatPrice(subTotal)}</h4>
         </Col>
       </Row>
@@ -143,7 +144,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
       )}
       <Row justify={"space-between"}>
         <Col>
-          <h2>Status :</h2>
+          <h2>Status</h2>
         </Col>
         <Col>
           <h2 style={{ color: statusColor(status) }}>{status}</h2>
@@ -151,10 +152,10 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         <Divider />
       </Row>
       <Row align={"middle"} justify="space-between">
-        <Col>
+        <Col flex={'auto'}>
           <h2>Items</h2>
         </Col>
-        <Col>
+        <Col flex={'auto'}>
           <ItemsDisplay items={items} />
         </Col>
         <Divider />
