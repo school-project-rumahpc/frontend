@@ -44,7 +44,7 @@ const getAction = ({ status, action, id }) => {
           loading={action.status === 'action'}
           onClick={() => action.rejectOrder(id)}
         >
-          Cancel
+          Reject
         </Button>
       );
     case 'Pending':
