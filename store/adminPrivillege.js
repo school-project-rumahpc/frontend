@@ -1,3 +1,4 @@
+import { message, notification } from 'antd';
 import { makeAutoObservable } from 'mobx';
 import { http } from '../utils/http';
 
@@ -12,11 +13,19 @@ export class createAdminPrivillege {
     this.ctx = ctx;
   }
 
+  notify(message,type) {
+    return notification[type]({
+      description: message,
+      duration: 0,
+      placement: 'topLeft',
+      style: { width: 550 },
+    });
+  }
   loadAllOrders(query) {
     this.status = 'pending';
     http
       .get('/order')
-      .query({ deleted: query.deleted, payment: query.payment })
+      .query(query)
       .then(({ body }) => {
         this.allOrders = body;
         this.filteredOrders = this.allOrders;
@@ -30,19 +39,26 @@ export class createAdminPrivillege {
     this.filteredOrders = this.filteredOrders.filter(
       (order) => order.status == status
     );
-    console.log({
-      all: this.allOrders,
-      filter: this.filteredOrders,
-    });
   }
   approveOrder(orderId) {
     this.status = 'action';
     http
-      .patch('/order/accept', {id:orderId})
-      .then(({ body }) => {
+      .patch('/order/accept', { order_id: orderId })
+      .then(() => {
         this.status = 'success';
-        console.log(body);
-        this.loadAllOrders({deleted:'false'})
+        this.notify(`Order ${orderId} accepted!`,'success');
+        this.loadAllOrders({ deleted: false });
+      })
+      .catch(({ response }) => console.log(response.body));
+  }
+  rejectOrder(orderId) {
+    this.status = 'action';
+    http
+      .patch('/order/reject', { order_id: orderId })
+      .then(() => {
+        this.status = 'success';
+        this.notify(`Order ${orderId} rejected`,'warning');
+        this.loadAllOrders({ deleted: false });
       })
       .catch(({ response }) => console.log(response.body));
   }

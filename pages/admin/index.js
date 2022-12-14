@@ -6,17 +6,17 @@ import {
   Spin,
   message,
   Segmented,
-  Divider,
   Statistic,
   notification,
   Table,
+  Switch,
 } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { formatPrice } from '../../utils/priceFormat';
 import { Custom, statusColor } from '../../utils/custom';
 import { TokenUtil } from '../../utils/token';
 import { http } from '../../utils/http';
 import { useStore } from '../../components/storeContext';
-import { Loading } from '../../components/loadingAndErr';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -36,7 +36,14 @@ const getAction = ({ status, action, id }) => {
   switch (status) {
     case 'Waiting':
       return (
-        <Button block danger type='primary' size='small'>
+        <Button
+          block
+          danger
+          type='primary'
+          size='small'
+          loading={action.status === 'action'}
+          onClick={() => action.rejectOrder(id)}
+        >
           Cancel
         </Button>
       );
@@ -56,16 +63,16 @@ const getAction = ({ status, action, id }) => {
       return;
   }
 };
-const ContentDisplay = ({ adminPrivillege }) => {
+const ContentDisplay = observer(({ adminPrivillege }) => {
   const [status, setStatus] = useState('All');
   const Alltatus = [
     'All',
-    'Fail',
     'Waiting',
     'Pending',
     'Approved',
     'OnQueue',
     'Finished',
+    'Failed',
   ];
   const statusLabel = Alltatus.map((status) => {
     return {
@@ -78,7 +85,7 @@ const ContentDisplay = ({ adminPrivillege }) => {
     };
   });
   const columnsKey =
-    adminPrivillege.allOrders.length > 0
+    adminPrivillege.allOrders?.length > 0
       ? Object.keys(adminPrivillege.allOrders[0])
       : [];
   const columnsKeyProp = columnsKey.map((e) => {
@@ -102,7 +109,7 @@ const ContentDisplay = ({ adminPrivillege }) => {
         }),
     };
   });
-  const data = adminPrivillege.filteredOrders.map((e) => {
+  const data = adminPrivillege.filteredOrders?.map((e) => {
     return {
       key: e.id,
       id: e.id,
@@ -110,6 +117,9 @@ const ContentDisplay = ({ adminPrivillege }) => {
       totalPrice: formatPrice(e.totalPrice),
       deadline: e.deadline,
       user: e.user.username,
+      orderDate: e.orderDate?.slice(0, 10),
+      updatedAt: e.updatedAt?.slice(0, 10),
+      deletedAt: e.deletedAt?.slice(0, 10),
       action: getAction({
         status: e.status,
         action: adminPrivillege,
@@ -133,34 +143,46 @@ const ContentDisplay = ({ adminPrivillege }) => {
           setStatus(status);
         }}
         options={statusLabel}
+        value={status}
         block
       />
-      <Row justify={'center'}>
-        <Table
-          size='middle'
-          title={() => (
+      <Table
+        // loading
+        loading={adminPrivillege.status === 'pending'}
+        size='middle'
+        title={() => (
+          <Row justify={'space-between'}>
             <h1 style={{ color: statusColor(status) }}>{status} Orders</h1>
-          )}
-          columns={[
-            ...columnsKeyProp,
-            {
-              key: 'action',
-              dataIndex: 'action',
-              title: 'Action',
-              fixed: 'right',
-            },
-          ]}
-          dataSource={data}
-          scroll={{ x: 1700 }}
-          pagination={{
-            position: ['bottomCenter'],
-            showTotal: (total, range) =>
-              `${range[0]}-${range[1]} of ${total} items`,
-          }}
-        />
-      </Row>
+            <Switch
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+              onChange={(checked) => {
+                console.log(status)
+                adminPrivillege.loadAllOrders({ deleted: checked })
+                setStatus('All')
+              }}
+            />
+          </Row>
+        )}
+        columns={[
+          ...columnsKeyProp,
+          {
+            key: 'action',
+            dataIndex: 'action',
+            title: 'Action',
+            fixed: 'right',
+          },
+        ]}
+        dataSource={data}
+        scroll={{ x: 1700 }}
+        pagination={{
+          position: ['bottomCenter'],
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} of ${total} items`,
+        }}
+      />
       <section style={{ display: 'none' }}>
-        {adminPrivillege.allOrders.map(({ user, deadline, id }) => {
+        {adminPrivillege.allOrders?.map(({ user, deadline, id }) => {
           if (!deadline) return;
           return (
             <Statistic.Countdown
@@ -193,12 +215,12 @@ const ContentDisplay = ({ adminPrivillege }) => {
       </section>
     </>
   );
-};
+})
 
 const Admin = () => {
   const router = useRouter();
   const { user, status } = useUser();
-  const adminPrivillege = useGet({ deleted: 'false', payment: 'false' });
+  const adminPrivillege = useGet({ deleted: false, payment: false });
   if (status !== 'done') return <Spin />;
   if (!user || user.role !== 'admin') return <Unauthorized />;
 
@@ -238,11 +260,11 @@ const Admin = () => {
         </Row>
       </Header>
       <Content style={{ ...Custom.contentStyle, paddingBottom: '60px' }}>
-        {adminPrivillege.status === 'pending' ? (
+        {/* {adminPrivillege.status === 'pending' ? (
           <Loading />
-        ) : (
-          <ContentDisplay adminPrivillege={adminPrivillege} />
-        )}
+        ) : ( */}
+        <ContentDisplay adminPrivillege={adminPrivillege} />
+        {/* )} */}
       </Content>
     </Layout>
   );
