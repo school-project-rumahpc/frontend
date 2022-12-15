@@ -1,25 +1,25 @@
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import {
-  Layout,
-  Row,
-  Col,
   Button,
-  Spin,
+  Col,
+  Layout,
   message,
-  Segmented,
-  Statistic,
   notification,
-  Table,
+  Row,
+  Segmented,
+  Spin,
+  Statistic,
   Switch,
-} from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { formatPrice } from '../../utils/priceFormat';
-import { Custom, statusColor } from '../../utils/custom';
-import { TokenUtil } from '../../utils/token';
-import { http } from '../../utils/http';
-import { useStore } from '../../components/storeContext';
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+  Table,
+} from "antd";
+import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useStore } from "../../components/storeContext";
+import { Custom, statusColor } from "../../utils/custom";
+import { http } from "../../utils/http";
+import { formatPrice } from "../../utils/priceFormat";
+import { TokenUtil } from "../../utils/token";
 
 const { Header, Content } = Layout;
 
@@ -27,36 +27,47 @@ const Unauthorized = () => {
   const router = useRouter();
   useEffect(() => router.back(), []);
   return (
-    <Row justify='center'>
+    <Row justify="center">
       <h1>Unauthorized! redirecting back...</h1>
     </Row>
   );
 };
 const getAction = ({ status, action, id }) => {
   switch (status) {
-    case 'Waiting':
+    case "Waiting":
       return (
         <Button
           block
           danger
-          type='primary'
-          size='small'
-          loading={action.status === 'action'}
+          type="primary"
+          size="small"
+          loading={action.status === "action"}
           onClick={() => action.rejectOrder(id)}
         >
           Reject
         </Button>
       );
-    case 'Pending':
+    case "Pending":
       return (
         <Button
           block
-          type='primary'
-          size='small'
-          loading={action.status === 'action'}
+          size="small"
+          loading={action.status === "action"}
           onClick={() => action.approveOrder(id)}
         >
           Approve
+        </Button>
+      );
+    case "Approved":
+      return (
+        <Button
+          block
+          type="primary"
+          size="small"
+          loading={action.status === "action"}
+          onClick={() => action.finishOrder(id)}
+        >
+          Finish
         </Button>
       );
     default:
@@ -64,15 +75,14 @@ const getAction = ({ status, action, id }) => {
   }
 };
 const ContentDisplay = observer(({ adminPrivillege }) => {
-  const [status, setStatus] = useState('All');
+  const [status, setStatus] = useState("All");
   const Alltatus = [
-    'All',
-    'Waiting',
-    'Pending',
-    'Approved',
-    'OnQueue',
-    'Finished',
-    'Failed',
+    "All",
+    "Waiting",
+    "Pending",
+    "Approved",
+    "Finished",
+    "Failed",
   ];
   const statusLabel = Alltatus.map((status) => {
     return {
@@ -92,18 +102,18 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
     return {
       key: e,
       dataIndex: e,
-      width: e == 'id' ? 500 : e == 'totalPrice' && 150,
+      width: e == "id" ? 500 : e == "totalPrice" && 150,
       title: e[0].toUpperCase() + e.substring(1),
-      fixed: e == 'user' && 'right',
-      align: e == 'deadline' && 'center',
+      fixed: e == "user" && "right",
+      align: e == "deadline" && "center",
       render:
-        e == 'deadline' &&
+        e == "deadline" &&
         ((deadline) => {
-          if (deadline == null) return '-';
+          if (deadline == null) return "-";
           return (
             <Statistic.Countdown
-              value={new Date(deadline?.replace(' ', 'T')).getTime()}
-              valueStyle={{ color: 'red', fontSize: '16px' }}
+              value={new Date(deadline?.replace(" ", "T")).getTime()}
+              valueStyle={{ color: "red", fontSize: "16px" }}
             />
           );
         }),
@@ -127,11 +137,11 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       }),
       image:
         (e.image && (
-          <a target={'_blank'} href={e.image}>
+          <a target={"_blank"} href={e.image}>
             Open image
           </a>
         )) ||
-        'no image',
+        "no image",
     };
   });
 
@@ -148,18 +158,17 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       />
       <Table
         // loading
-        loading={adminPrivillege.status === 'pending'}
-        size='middle'
+        loading={adminPrivillege.status === "pending"}
+        size="middle"
         title={() => (
-          <Row justify={'space-between'}>
+          <Row justify={"space-between"}>
             <h1 style={{ color: statusColor(status) }}>{status} Orders</h1>
             <Switch
               checkedChildren={<CheckOutlined />}
               unCheckedChildren={<CloseOutlined />}
               onChange={(checked) => {
-                console.log(status)
-                adminPrivillege.loadAllOrders({ deleted: checked })
-                setStatus('All')
+                adminPrivillege.loadAllOrders({ deleted: checked });
+                setStatus("All");
               }}
             />
           </Row>
@@ -167,35 +176,35 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
         columns={[
           ...columnsKeyProp,
           {
-            key: 'action',
-            dataIndex: 'action',
-            title: 'Action',
-            fixed: 'right',
+            key: "action",
+            dataIndex: "action",
+            title: "Action",
+            fixed: "right",
           },
         ]}
         dataSource={data}
         scroll={{ x: 1700 }}
         pagination={{
-          position: ['bottomCenter'],
+          position: ["bottomCenter"],
           showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} items`,
         }}
       />
-      <section style={{ display: 'none' }}>
+      <section style={{ display: "none" }}>
         {adminPrivillege.allOrders?.map(({ user, deadline, id }) => {
           if (!deadline) return;
           return (
             <Statistic.Countdown
               key={id}
               // value={Date.now() + 3 * 1000}
-              value={new Date(deadline?.replace(' ', 'T')).getTime()}
+              value={new Date(deadline?.replace(" ", "T")).getTime()}
               onFinish={() => {
                 adminPrivillege.loadAllOrders({
-                  deleted: 'false',
-                  payment: 'false',
+                  deleted: "false",
+                  payment: "false",
                 });
                 notification.warning({
-                  message: 'Warning!',
+                  message: "Warning!",
                   description: (
                     <h4>
                       <b>Order from {user.username} </b>
@@ -205,7 +214,7 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
                     </h4>
                   ),
                   duration: 0,
-                  placement: 'topLeft',
+                  placement: "topLeft",
                   style: { width: 550 },
                 });
               }}
@@ -215,56 +224,52 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       </section>
     </>
   );
-})
+});
 
 const Admin = () => {
   const router = useRouter();
   const { user, status } = useUser();
   const adminPrivillege = useGet({ deleted: false, payment: false });
-  if (status !== 'done') return <Spin />;
-  if (!user || user.role !== 'admin') return <Unauthorized />;
+  if (status !== "done") return <Spin />;
+  if (!user || user.role !== "admin") return <Unauthorized />;
 
   const logOut = () => {
     TokenUtil.clearAccessToken();
     TokenUtil.persistToken();
-    router.push('/');
-    message.success('Logout success');
+    router.push("/");
+    message.success("Logout success");
   };
 
   return (
     <Layout
       style={{
-        minHeight: '100vh',
-        maxHeight: '100%',
-        backgroundColor: '#009867',
+        minHeight: "100vh",
+        maxHeight: "100%",
+        backgroundColor: "#009867",
       }}
     >
-      <Header style={{ zIndex: '1' }}>
+      <Header style={{ zIndex: "1" }}>
         <Row
-          align='middle'
-          justify='space-between'
+          align="middle"
+          justify="space-between"
           style={{
-            padding: '0 20px',
-            height: '100%',
-            boxShadow: ' 0px 2px 5px rgba(0, 0, 0, 0.25)',
+            padding: "0 20px",
+            height: "100%",
+            boxShadow: " 0px 2px 5px rgba(0, 0, 0, 0.25)",
           }}
         >
           <Col>
             <h1>Admin Page</h1>
           </Col>
           <Col>
-            <Button danger size='large' type='text' onClick={logOut}>
+            <Button danger size="large" type="text" onClick={logOut}>
               Log Out
             </Button>
           </Col>
         </Row>
       </Header>
-      <Content style={{ ...Custom.contentStyle, paddingBottom: '60px' }}>
-        {/* {adminPrivillege.status === 'pending' ? (
-          <Loading />
-        ) : ( */}
+      <Content style={{ ...Custom.contentStyle, paddingBottom: "60px" }}>
         <ContentDisplay adminPrivillege={adminPrivillege} />
-        {/* )} */}
       </Content>
     </Layout>
   );
@@ -273,14 +278,14 @@ const Admin = () => {
 export default observer(Admin);
 
 const useUser = () => {
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState("pending");
   const [user, setUser] = useState();
   useEffect(() => {
-    setStatus('pending');
+    setStatus("pending");
     http
-      .get('/auth/user')
+      .get("/auth/user")
       .then(({ body }) => {
-        setStatus('done');
+        setStatus("done");
         setUser(body);
       })
       .catch(({ response }) => console.log(response.message));
