@@ -9,7 +9,7 @@ import {
   Image,
   Spin,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, LoadingOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -21,28 +21,45 @@ import { http } from "../../utils/http";
 
 // proof of payment
 const POP = ({ checkoutDetails }) => {
-  const { id } = checkoutDetails;
+  const router = useRouter();
+  const { id, status } = checkoutDetails;
   const { checkoutStore } = useStore();
-  const [uploading, setUploading] = useState(false);
+  const [action, setAction] = useState(false);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  const handleCancel = () => {
+    setAction(true);
+    http
+      .del("/order/cancel")
+      .send({ order_id: id })
+      .then(({ body }) => {
+        message.success(body.message);
+        router.push("/checkout");
+      })
+      .catch(({ response }) => {
+        message.error(response.body.message);
+      })
+      .finally(() => {
+        checkoutStore.loadCheckoutDetails(id);
+        setAction(false);
+      });
+  };
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append("order_id", id);
     formData.append("image", image);
-    setUploading(true);
+    setAction(true);
     http
       .post("/order/upload", formData)
       .then(({ body }) => {
         message.success(body.message);
       })
       .catch(() => {
-        message.error('File must be under 10 MB');
+        message.error("File must be under 10 MB");
       })
       .finally(() => {
         checkoutStore.loadCheckoutDetails(id);
-        setUploading(false);
+        setAction(false);
       });
   };
 
@@ -50,60 +67,89 @@ const POP = ({ checkoutDetails }) => {
     setImage(file);
     return false;
   };
-
   return (
     <>
-      <Row justify={"center"} style={{ width: "100%" }}>
-        <Col style={{ width: "100%" }}>
-          {image && (
-            <a
-              onClick={() =>
-                image
-                  .arrayBuffer()
-                  .then((res) =>
-                    setPreview(
-                      Buffer.from(new Uint8Array(res)).toString("base64")
-                    )
-                  )
-              }
-            >
-              Show preview
-            </a>
-          )}
-          <Upload
-            onRemove={() => {
-              setImage(null);
-              setPreview(null);
-            }}
-            accept="image/*"
-            beforeUpload={handlePreUpload}
-            listType="list"
-            onPreview={false}
-          >
-            {!image && (
-              <Button icon={<UploadOutlined />} type="text">
-                Upload
-              </Button>
-            )}
-          </Upload>
-        </Col>
-      </Row>
-      {preview && (
-        <Row>
-          <Image placeholder={<Spin children='Loading preview...'/>} src={`data:image/*;base64,${preview}`} preview={false} />
+      {checkoutDetails.image ? (
+        <Row justify={"center"} style={{ margin: "20px 0" }}>
+          <Image
+            preview={false}
+            placeholder={<Spin />}
+            style={{ borderRadius: "20px" }}
+            src={checkoutDetails.image}
+            height="100%"
+          />
         </Row>
+      ) : (
+        <>
+          <Row justify={"center"} style={{ width: "100%" }}>
+            <Col style={{ width: "100%" }}>
+              {image && (
+                <a
+                  onClick={() =>
+                    image
+                      .arrayBuffer()
+                      .then((res) =>
+                        setPreview(
+                          Buffer.from(new Uint8Array(res)).toString("base64")
+                        )
+                      )
+                  }
+                >
+                  Show preview
+                </a>
+              )}
+              <Upload
+                onRemove={() => {
+                  setImage(null);
+                  setPreview(null);
+                }}
+                accept="image/*"
+                beforeUpload={handlePreUpload}
+                listType="list"
+                onPreview={false}
+              >
+                {!image && (
+                  <Button icon={<UploadOutlined />} type="text">
+                    Upload
+                  </Button>
+                )}
+              </Upload>
+            </Col>
+          </Row>
+          <Row justify={"center"} style={{ margin: "20px 0", gap: "20px 0" }}>
+            <Button
+              block
+              disabled={!image}
+              loading={action}
+              type="primary"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </Row>
+          {preview && (
+            <Row justify="center">
+              <Image
+                style={{ borderRadius: "20px", marginBottom: '20px',minHeight:'40px' }}
+                placeholder={<LoadingOutlined/>}
+                src={`data:image/*;base64,${preview}`}
+                preview={false}
+              />
+            </Row>
+          )}
+        </>
       )}
-      <Row justify={"center"} style={{ margin: "20px 0" }}>
+      {status != "Finished" && (
         <Button
-          disabled={!image}
-          loading={uploading}
-          type="primary"
-          onClick={handleSubmit}
+          danger
           block
+          loading={action}
+          onClick={handleCancel}
+          style={{ marginBottom: "40px" }}
         >
-          Submit
+          Cancel order
         </Button>
-      </Row>
+      )}
     </>
   );
 };
@@ -112,18 +158,18 @@ const ItemsDisplay = ({ items }) => {
   return items.map(({ id, quantity, item, subTotal }) => {
     return (
       <Row
-        style={{textAlign:'end'}}
+        style={{ textAlign: "end" }}
         key={id}
         gutter={[30]}
         justify="space-between"
       >
-        <Col flex={'auto'}>
+        <Col flex={"auto"}>
           <h3>{item.name}</h3>
         </Col>
         <Col>
           <h3>{quantity}x</h3>
         </Col>
-        <Col >
+        <Col>
           <h4>{formatPrice(subTotal)}</h4>
         </Col>
       </Row>
@@ -133,7 +179,6 @@ const ItemsDisplay = ({ items }) => {
 
 const OrderDetailsDisplay = ({ checkoutDetails }) => {
   const { deadline, status, items, totalPrice, image } = checkoutDetails;
-  console.log(image);
   return (
     <>
       {deadline && (
@@ -152,10 +197,10 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         <Divider />
       </Row>
       <Row align={"middle"} justify="space-between">
-        <Col flex={'auto'}>
+        <Col flex={"auto"}>
           <h2>Items</h2>
         </Col>
-        <Col flex={'auto'}>
+        <Col flex={"auto"}>
           <ItemsDisplay items={items} />
         </Col>
         <Divider />
@@ -173,23 +218,7 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
       <Row>
         <h2>Proof Of Payment</h2>
       </Row>
-      {image ? (
-        <Row justify={"center"} style={{ margin: "20px 0 40px" }}>
-          <Image
-            preview={false}
-            placeholder={<Spin />}
-            style={{
-              border: "2px solid #009867",
-              borderRadius: "20px",
-            }}
-            src={image}
-            width={500}
-            height="100%"
-          />
-        </Row>
-      ) : (
-        <POP checkoutDetails={checkoutDetails} />
-      )}
+      <POP checkoutDetails={checkoutDetails} />
     </>
   );
 };
