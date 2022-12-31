@@ -1,4 +1,4 @@
-import { HeartFilled, LeftOutlined, MenuOutlined } from '@ant-design/icons';
+import { LeftOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
@@ -40,9 +40,9 @@ const Catalog = () => {
         <Footer>
           <h5 style={{ color: 'GrayText' }}>
             Made by &nbsp;
-            <a target={'_blank'} href='https://instagram.com/darwin.id'>Darwin </a>
+            <a target={'_blank'} href='https://instagram.com/darwin.id' rel="noreferrer">Darwin </a>
             &&nbsp;
-            <a target={'_blank'} href='https://instagram.com/arilramadani24'>Aril</a>
+            <a target={'_blank'} href='https://instagram.com/arilramadani24' rel="noreferrer">Aril</a>
           </h5>
         </Footer>
       </Layout>

@@ -149,7 +149,7 @@ const ContentDisplay = observer(({ adminPrivillege }) => {
       }),
       image:
         (e.image && (
-          <a target={'_blank'} href={e.image}>
+          <a target={'_blank'} href={e.image} rel="noreferrer">
             Open image
           </a>
         )) ||

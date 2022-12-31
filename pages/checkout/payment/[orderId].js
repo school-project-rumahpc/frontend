@@ -39,7 +39,7 @@ const Payment = () => {
   if (status == 'pending') return <Spin />;
   if (status == 'error') return <Err />;
   if (checkoutDetails.status != 'Finished')
-    return <h1>Payment isn't completed</h1>;
+    return <h1>Payment isn&#39;t completed</h1>;
 
   return (
     <main

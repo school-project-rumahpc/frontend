@@ -45,6 +45,7 @@ const OurShop = () => {
               <a
                 href='https://g.page/dignitas-id?share'
                 target={'_blank'}
+                rel="noreferrer"
                 style={{ color: 'blue' }}
               >
                 Get a direction here.

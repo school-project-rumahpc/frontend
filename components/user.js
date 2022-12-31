@@ -40,7 +40,7 @@ const UserDrawer = ({ drawerClose, open }) => {
         <UserInfo />
       ) : (
         <Link href={'/'}>
-          <a>You're not logged in, please login.</a>
+          <a>You&#39;re not logged in, please login.</a>
         </Link>
       )}
     </Drawer>
