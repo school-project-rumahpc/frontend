@@ -139,7 +139,7 @@ const POP = ({ checkoutDetails }) => {
           )}
         </>
       )}
-      {status != "Finished" && (
+      {status != "Finished" ? (
         <Button
           danger
           block
@@ -149,7 +149,15 @@ const POP = ({ checkoutDetails }) => {
         >
           Cancel order
         </Button>
-      )}
+      ):(
+      <Button
+      block
+      loading={action}
+      onClick={()=>router.push(`/checkout/payment/${id}`)}
+      style={{ marginBottom: "40px" }}
+      >
+        See Receipt
+      </Button>)}
     </>
   );
 };
@@ -161,15 +169,15 @@ const ItemsDisplay = ({ items }) => {
         style={{ textAlign: "end" }}
         key={id}
         gutter={[30]}
-        justify="space-between"
+        justify="end"
       >
-        <Col flex={"auto"}>
+        <Col>
           <h3>{item.name}</h3>
         </Col>
-        <Col>
+        <Col >
           <h3>{quantity}x</h3>
         </Col>
-        <Col>
+        <Col span={7}>
           <h4>{formatPrice(subTotal)}</h4>
         </Col>
       </Row>
@@ -178,7 +186,7 @@ const ItemsDisplay = ({ items }) => {
 };
 
 const OrderDetailsDisplay = ({ checkoutDetails }) => {
-  const { deadline, status, items, totalPrice, image } = checkoutDetails;
+  const { deadline, status, items, totalPrice } = checkoutDetails;
   return (
     <>
       {deadline && (
@@ -197,10 +205,10 @@ const OrderDetailsDisplay = ({ checkoutDetails }) => {
         <Divider />
       </Row>
       <Row align={"middle"} justify="space-between">
-        <Col flex={"auto"}>
+        <Col span={3}>
           <h2>Items</h2>
         </Col>
-        <Col flex={"auto"}>
+        <Col flex={'auto'}>
           <ItemsDisplay items={items} />
         </Col>
         <Divider />
@@ -263,7 +271,7 @@ const OrderDetails = () => {
 
 export default observer(OrderDetails);
 
-const useCheckOutDetails = () => {
+export const useCheckOutDetails = () => {
   const { checkoutStore } = useStore();
   const router = useRouter();
   useEffect(() => {
