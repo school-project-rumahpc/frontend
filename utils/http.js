@@ -3,7 +3,7 @@ import superagentIntercept from 'superagent-intercept';
 import { appConfig } from '../config/appConfig';
 import { attachSuperagentLogger } from './http_logger';
 import { TokenUtil } from './token';
-TokenUtil.loadToken()
+TokenUtil.loadToken();
 let AuthIntercept = superagentIntercept((err, res) => {
   if (res && res.status === 401) {
     TokenUtil.clearAccessToken();
@@ -59,9 +59,10 @@ export const http = {
     }
     return req;
   },
-  put: (url, opts) => {
+  patch: (url, opts) => {
     let req = superagent
-      .put(appConfig.apiUrl + url)
+      .patch(appConfig.apiUrl + url)
+      .send(opts)
       .use(AuthIntercept)
       .use(attachSuperagentLogger);
     if (TokenUtil.accessToken) {
@@ -82,13 +83,12 @@ export const http = {
   },
   upload: (url, file) => {
     let req = superagent
-      .post(appConfig.imageApiUrl + url)
-      .use(AuthIntercept)
-      .attach('file', file);
+      .post(appConfig.apiUrl + url)
+      // .use(AuthIntercept)
+      .attach(file.name, file);
     if (TokenUtil.accessToken) {
-      req = req.sauth(TokenUtil.accessToken, { type: 'bearer' });
+      req = req.auth(TokenUtil.accessToken, { type: 'bearer' });
     }
-
     return req;
   },
 };

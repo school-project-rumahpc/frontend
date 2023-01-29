@@ -1,18 +1,29 @@
 import { message } from 'antd';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Background from '../components/landing/background';
 import FormPage from '../components/landing/form';
 import Navbar from '../components/landing/header';
 import styles from '../styles/home.module.css';
 import { TokenUtil } from '../utils/token';
 
-TokenUtil.loadToken();
+const Redirect = () => {
+  const router = useRouter();
+  router.push('/catalog');
+  return <p>Already logged in, Redirecting...</p>;
+};
 
 const Home = () => {
+  const [isLoggedIn, setIslogged] = useState(false);
+  useEffect(() => {
+    TokenUtil.loadToken();
+    if (!TokenUtil.accessToken) return;
+    setIslogged(true)
+  }, [TokenUtil.accessToken]);
   return (
     <>
-      {TokenUtil.accessToken ? (
-       window.open('/catalog','_SELF')
+      {isLoggedIn ? (
+        <Redirect />
       ) : (
         <div className={styles.container}>
           <main className={styles.main}>

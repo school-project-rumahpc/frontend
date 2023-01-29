@@ -19,8 +19,8 @@ export class createCheckoutStore {
         this.checkoutDetails = body;
         this.status = 'successDetails';
       })
-      .catch(() => {
-        message.error('Something went wrong!');
+      .catch(({response}) => {
+        message.error(response.body.message);
         this.status = 'error';
       });
   }
@@ -32,8 +32,8 @@ export class createCheckoutStore {
         this.userCheckout = body;
         this.status = 'success';
       })
-      .catch(() => {
-        message.error('Something went wrong!');
+      .catch(({response}) => {
+        message.error(response.body.message);
         this.status = 'error';
       });
   }

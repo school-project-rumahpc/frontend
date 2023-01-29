@@ -1,4 +1,4 @@
-import { HeartFilled, LeftOutlined, MenuOutlined } from '@ant-design/icons';
+import { LeftOutlined, MenuOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
@@ -39,14 +39,10 @@ const Catalog = () => {
         </Content>
         <Footer>
           <h5 style={{ color: 'GrayText' }}>
-            Made with{' '}
-            <i style={{ color: 'crimson' }}>
-              <HeartFilled color='crimson' />
-            </i>{' '}
-            by&nbsp;
-            <a target={'_blank'} href='https://github.com/LmaoDarwin'>Darwin </a>
+            Made by &nbsp;
+            <a target={'_blank'} href='https://instagram.com/darwin.id' rel="noreferrer">Darwin </a>
             &&nbsp;
-            <a target={'_blank'} href='https://github.com/arilramadani24'>Aril</a>
+            <a target={'_blank'} href='https://instagram.com/arilramadani24' rel="noreferrer">Aril</a>
           </h5>
         </Footer>
       </Layout>
